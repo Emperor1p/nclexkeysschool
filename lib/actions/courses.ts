@@ -89,16 +89,56 @@ export async function getInstructorCourses() {
       throw new Error("User not authenticated");
     }
 
-    // Get courses with materials
-    const { data: courses, error: coursesError } = await supabase
-      .from('courses')
-      .select(`
-        *,
-        course_materials(*),
-        course_enrollments(count)
-      `)
-      .eq('instructor_id', user.id)
-      .order('created_at', { ascending: false });
+    // Get courses with materials - try with relationship first, fallback to separate queries
+    let courses, coursesError;
+    
+    try {
+      const result = await supabase
+        .from('courses')
+        .select(`
+          *,
+          course_materials(*),
+          course_enrollments(count)
+        `)
+        .eq('instructor_id', user.id)
+        .order('created_at', { ascending: false });
+      
+      courses = result.data;
+      coursesError = result.error;
+    } catch (relationshipError) {
+      // If relationship query fails, try separate queries
+      console.log('Relationship query failed, trying separate queries...');
+      
+      const { data: coursesData, error: coursesErr } = await supabase
+        .from('courses')
+        .select('*')
+        .eq('instructor_id', user.id)
+        .order('created_at', { ascending: false });
+      
+      if (coursesErr) {
+        coursesError = coursesErr;
+      } else {
+        // Get materials and enrollments separately
+        const courseIds = coursesData?.map(c => c.id) || [];
+        
+        const { data: materials } = await supabase
+          .from('course_materials')
+          .select('*')
+          .in('course_id', courseIds);
+        
+        const { data: enrollments } = await supabase
+          .from('course_enrollments')
+          .select('course_id')
+          .in('course_id', courseIds);
+        
+        // Combine the data
+        courses = coursesData?.map(course => ({
+          ...course,
+          course_materials: materials?.filter(m => m.course_id === course.id) || [],
+          course_enrollments: [{ count: enrollments?.filter(e => e.course_id === course.id).length || 0 }]
+        }));
+      }
+    }
 
     if (coursesError) {
       // Check if it's a table doesn't exist error
@@ -125,21 +165,70 @@ export async function getStudentCourses() {
       throw new Error("User not authenticated");
     }
 
-    // Get enrolled courses with materials and progress
-    const { data: enrollments, error: enrollmentsError } = await supabase
-      .from('course_enrollments')
-      .select(`
-        *,
-        courses(
+    // Get enrolled courses with materials and progress - try relationship first, fallback to separate queries
+    let enrollments, enrollmentsError;
+    
+    try {
+      const result = await supabase
+        .from('course_enrollments')
+        .select(`
           *,
-          course_materials(*),
-          users!courses_instructor_id_fkey(full_name)
-        ),
-        material_progress(*)
-      `)
-      .eq('student_id', user.id)
-      .eq('status', 'active')
-      .order('enrolled_at', { ascending: false });
+          courses(
+            *,
+            course_materials(*),
+            users!courses_instructor_id_fkey(full_name)
+          ),
+          material_progress(*)
+        `)
+        .eq('student_id', user.id)
+        .eq('status', 'active')
+        .order('enrolled_at', { ascending: false });
+      
+      enrollments = result.data;
+      enrollmentsError = result.error;
+    } catch (relationshipError) {
+      // If relationship query fails, try separate queries
+      console.log('Relationship query failed for enrollments, trying separate queries...');
+      
+      const { data: enrollmentsData, error: enrollmentsErr } = await supabase
+        .from('course_enrollments')
+        .select('*')
+        .eq('student_id', user.id)
+        .eq('status', 'active')
+        .order('enrolled_at', { ascending: false });
+      
+      if (enrollmentsErr) {
+        enrollmentsError = enrollmentsErr;
+      } else {
+        // Get courses, materials, and progress separately
+        const courseIds = enrollmentsData?.map(e => e.course_id) || [];
+        
+        const { data: courses } = await supabase
+          .from('courses')
+          .select('*')
+          .in('id', courseIds);
+        
+        const { data: materials } = await supabase
+          .from('course_materials')
+          .select('*')
+          .in('course_id', courseIds);
+        
+        const { data: progress } = await supabase
+          .from('material_progress')
+          .select('*')
+          .in('enrollment_id', enrollmentsData?.map(e => e.id) || []);
+        
+        // Combine the data
+        enrollments = enrollmentsData?.map(enrollment => ({
+          ...enrollment,
+          courses: {
+            ...courses?.find(c => c.id === enrollment.course_id),
+            course_materials: materials?.filter(m => m.course_id === enrollment.course_id) || []
+          },
+          material_progress: progress?.filter(p => p.enrollment_id === enrollment.id) || []
+        }));
+      }
+    }
 
     if (enrollmentsError) {
       throw new Error(`Failed to fetch enrollments: ${enrollmentsError.message}`);
