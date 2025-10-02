@@ -241,10 +241,10 @@ export default function HomePage() {
           </div>
 
           {/* Testimony Carousel */}
-          <div className="relative max-w-4xl mx-auto">
-            <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+          <div className="relative max-w-xl mx-auto">
+            <div className="relative overflow-hidden rounded-xl shadow-lg">
               {/* Main testimony image */}
-              <div className="relative aspect-[4/3] w-full">
+              <div className="relative aspect-[4/3] w-full max-h-80">
                 <Image
                   src={testimonyImages[currentTestimony]}
                   alt={`Student testimony ${currentTestimony + 1}`}
@@ -259,18 +259,18 @@ export default function HomePage() {
                 {/* Navigation arrows */}
                 <button
                   onClick={prevTestimony}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 hover:scale-110"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all duration-300 hover:scale-110"
                   aria-label="Previous testimony"
                 >
-                  <ChevronLeft className="h-6 w-6 text-white" />
+                  <ChevronLeft className="h-4 w-4 text-white" />
                 </button>
                 
                 <button
                   onClick={nextTestimony}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 hover:scale-110"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all duration-300 hover:scale-110"
                   aria-label="Next testimony"
                 >
-                  <ChevronRight className="h-6 w-6 text-white" />
+                  <ChevronRight className="h-4 w-4 text-white" />
                 </button>
               </div>
             </div>
