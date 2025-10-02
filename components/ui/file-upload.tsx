@@ -101,8 +101,8 @@ export function FileUpload({ onUpload, accept = "*/*", maxSize = 50, className =
       <div
         className={`relative border-2 border-dashed rounded-lg p-6 transition-colors ${
           dragActive
-            ? "border-primary bg-primary/5"
-            : "border-muted-foreground/25 hover:border-primary/50"
+            ? "border-[#9faeed] bg-[#9faeed]/5"
+            : "border-soft hover:border-glow"
         }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}

@@ -63,7 +63,7 @@ export default function ServicesPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service, index) => (
-                <Card key={index} className="border-2 hover:border-primary/50 transition-colors">
+                <Card key={index} className="border-soft hover:border-glow transition-all duration-300 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm">
                   <CardHeader>
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4">
                       <service.icon className="h-6 w-6" />

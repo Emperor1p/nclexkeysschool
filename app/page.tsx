@@ -43,37 +43,37 @@ export default function HomePage() {
       icon: BookOpen,
       title: "Comprehensive Content",
       description: "Access 100+ video lectures and 2000+ practice questions covering all NCLEX topics.",
-      gradient: "from-blue-500 to-cyan-500",
+      gradient: "from-[#9faeed] to-[#6daedb]",
     },
     {
       icon: Users,
       title: "Expert Instructors",
       description: "Learn from experienced nursing educators with proven track records.",
-      gradient: "from-purple-500 to-pink-500",
+      gradient: "from-[#6daedb] to-[#2f4e7a]",
     },
     {
       icon: Award,
       title: "High Pass Rates",
       description: "Our students consistently achieve above-average NCLEX pass rates.",
-      gradient: "from-orange-500 to-red-500",
+      gradient: "from-[#2f4e7a] to-[#143c78]",
     },
     {
       icon: TrendingUp,
       title: "Progress Tracking",
       description: "Monitor your learning journey with detailed analytics and insights.",
-      gradient: "from-green-500 to-emerald-500",
+      gradient: "from-[#143c78] to-[#0a0e1a]",
     },
     {
       icon: Clock,
       title: "Flexible Learning",
       description: "Study at your own pace with 24/7 access to all course materials.",
-      gradient: "from-indigo-500 to-blue-500",
+      gradient: "from-[#9faeed] to-[#2f4e7a]",
     },
     {
       icon: CheckCircle,
       title: "Proven Methods",
       description: "Evidence-based teaching strategies designed for NCLEX success.",
-      gradient: "from-pink-500 to-rose-500",
+      gradient: "from-[#6daedb] to-[#143c78]",
     },
   ]
 
@@ -148,7 +148,7 @@ export default function HomePage() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="glass-strong border-2 hover:border-blue-500/50 hover:scale-105 transition-all duration-300 text-lg px-8 py-6 bg-transparent"
+                className="glass-strong border-soft hover:border-glow hover:scale-105 transition-all duration-300 text-lg px-8 py-6 bg-transparent"
               >
                 <Link href="/about">
                   <span className="flex items-center gap-2">
@@ -186,7 +186,7 @@ export default function HomePage() {
           <div className="text-center space-y-4 mb-16 animate-fade-in-up">
             <h2 className="text-4xl sm:text-5xl font-bold">
               Why Choose{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] bg-clip-text text-transparent">
                 NCLEX Keys?
               </span>
             </h2>
@@ -199,7 +199,7 @@ export default function HomePage() {
             {features.map((feature, index) => (
               <Card
                 key={index}
-                className={`card-3d group border-2 hover:border-transparent relative overflow-hidden animate-scale-in stagger-${index + 1}`}
+                className={`card-3d group border-soft hover:border-glow relative overflow-hidden animate-scale-in stagger-${index + 1} bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm`}
               >
                 {/* Gradient overlay on hover */}
                 <div

@@ -20,7 +20,7 @@
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0 / 0.1);
+  --border: oklch(0.4 0.1 240 / 0.1);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
@@ -36,6 +36,33 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+}
+
+/* Custom Color Palette */
+:root {
+  --nclex-light-blue: #9faeed;
+  --nclex-blue: #6daedb;
+  --nclex-dark-blue: #2f4e7a;
+  --nclex-deep-blue: #143c78;
+  --nclex-dark: #0a0e1a;
+}
+
+/* Remove black borders and improve card styling */
+.border-soft {
+  border-color: oklch(0.4 0.1 240 / 0.1) !important;
+}
+
+.border-glow {
+  border-color: var(--nclex-light-blue) !important;
+  box-shadow: 0 0 20px rgba(159, 174, 237, 0.3) !important;
+}
+
+.card-gradient {
+  background: linear-gradient(135deg, var(--nclex-light-blue), var(--nclex-blue));
+}
+
+.card-gradient-dark {
+  background: linear-gradient(135deg, var(--nclex-dark-blue), var(--nclex-deep-blue));
 }
 
 @theme inline {
