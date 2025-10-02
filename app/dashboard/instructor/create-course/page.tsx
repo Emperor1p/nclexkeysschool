@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createCourse, type CourseData, type CourseMaterial } from "@/lib/actions/courses";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,7 +29,7 @@ import {
   CheckCircle
 } from "lucide-react";
 
-interface CourseMaterial {
+interface LocalCourseMaterial {
   id: string;
   type: 'video' | 'pdf' | 'slides';
   title: string;
@@ -49,14 +50,14 @@ export default function CreateCoursePage() {
     category: "NCLEX-RN"
   });
 
-  const [materials, setMaterials] = useState<CourseMaterial[]>([]);
+  const [materials, setMaterials] = useState<LocalCourseMaterial[]>([]);
   const [activeTab, setActiveTab] = useState("basic");
   const [uploading, setUploading] = useState(false);
   const [success, setSuccess] = useState(false);
 
   // Add new material
   const addMaterial = (type: 'video' | 'pdf' | 'slides') => {
-    const newMaterial: CourseMaterial = {
+    const newMaterial: LocalCourseMaterial = {
       id: Date.now().toString(),
       type,
       title: "",
@@ -67,7 +68,7 @@ export default function CreateCoursePage() {
   };
 
   // Update material
-  const updateMaterial = (id: string, updates: Partial<CourseMaterial>) => {
+  const updateMaterial = (id: string, updates: Partial<LocalCourseMaterial>) => {
     setMaterials(materials.map(material => 
       material.id === id ? { ...material, ...updates } : material
     ));
@@ -106,14 +107,31 @@ export default function CreateCoursePage() {
 
     setUploading(true);
     try {
-      // Simulate saving course
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setSuccess(true);
+      // Convert local materials to database format
+      const dbMaterials: CourseMaterial[] = materials.map((material, index) => ({
+        title: material.title,
+        description: material.description,
+        type: material.type,
+        file_name: material.file?.name,
+        file_url: material.url,
+        file_size: material.file?.size,
+        duration: material.duration,
+        order_index: index + 1
+      }));
+
+      // Save to database
+      const result = await createCourse(courseData, dbMaterials);
       
-      // Redirect after success
-      setTimeout(() => {
-        router.push('/dashboard/instructor');
-      }, 2000);
+      if (result.success) {
+        setSuccess(true);
+        // Redirect after success
+        setTimeout(() => {
+          router.push('/dashboard/instructor');
+        }, 2000);
+      } else {
+        console.error('Save failed:', result.error);
+        // Handle error - you might want to show an error message
+      }
     } catch (error) {
       console.error('Save failed:', error);
     } finally {
@@ -161,7 +179,7 @@ export default function CreateCoursePage() {
                     Publish Course
                   </div>
                 )}
-              </Button>
+        </Button>
             </div>
           </div>
         </div>
@@ -174,8 +192,8 @@ export default function CreateCoursePage() {
             <AlertDescription className="text-green-800">
               Course created successfully! Redirecting to dashboard...
             </AlertDescription>
-          </Alert>
-        )}
+                </Alert>
+              )}
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
@@ -195,10 +213,10 @@ export default function CreateCoursePage() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="title">Course Title *</Label>
-                    <Input
-                      id="title"
+              <div className="space-y-2">
+                <Label htmlFor="title">Course Title *</Label>
+                <Input
+                  id="title"
                       value={courseData.title}
                       onChange={(e) => setCourseData({...courseData, title: e.target.value})}
                       placeholder="e.g., NCLEX-RN Comprehensive Review"
@@ -214,21 +232,21 @@ export default function CreateCoursePage() {
                       className="border-soft"
                     />
                   </div>
-                </div>
+              </div>
 
-                <div className="space-y-2">
+              <div className="space-y-2">
                   <Label htmlFor="description">Course Description *</Label>
-                  <Textarea
-                    id="description"
+                <Textarea
+                  id="description"
                     value={courseData.description}
                     onChange={(e) => setCourseData({...courseData, description: e.target.value})}
                     placeholder="Describe what students will learn in this course..."
                     className="border-soft min-h-[120px]"
-                  />
-                </div>
+                />
+              </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
+              <div className="space-y-2">
                     <Label htmlFor="duration">Duration</Label>
                     <Input
                       id="duration"
@@ -237,10 +255,10 @@ export default function CreateCoursePage() {
                       placeholder="e.g., 8 weeks, 40 hours"
                       className="border-soft"
                     />
-                  </div>
-                  <div className="space-y-2">
+              </div>
+              <div className="space-y-2">
                     <Label htmlFor="price">Price</Label>
-                    <Input
+                <Input
                       id="price"
                       value={courseData.price}
                       onChange={(e) => setCourseData({...courseData, price: e.target.value})}
@@ -323,13 +341,13 @@ export default function CreateCoursePage() {
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
-                        </div>
+              </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="space-y-3">
                             <div>
                               <Label>Title</Label>
-                              <Input
+                <Input
                                 value={material.title}
                                 onChange={(e) => updateMaterial(material.id, { title: e.target.value })}
                                 placeholder={`Enter ${material.type} title`}
@@ -345,7 +363,7 @@ export default function CreateCoursePage() {
                                 className="border-soft"
                               />
                             </div>
-                          </div>
+              </div>
 
                           <div className="space-y-3">
                             <div>
@@ -356,8 +374,8 @@ export default function CreateCoursePage() {
                                 maxSize={material.type === 'video' ? 500 : 50}
                                 className="border-soft"
                               />
-                            </div>
-                            
+              </div>
+
                             {material.file && (
                               <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
                                 <div className="flex items-center gap-2 text-green-800">
@@ -446,9 +464,9 @@ export default function CreateCoursePage() {
                       </div>
                     </div>
                   )}
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+          </CardContent>
+        </Card>
           </TabsContent>
         </Tabs>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { getInstructorCourses, updateCourseStatus, deleteCourse } from "@/lib/actions/courses";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,38 +34,8 @@ import {
 } from "lucide-react";
 
 export default function InstructorDashboard() {
-  const [courses, setCourses] = useState([
-    {
-      id: 1,
-      title: "NCLEX-RN Comprehensive Review",
-      students: 45,
-      status: "active",
-      lastUpdated: "2 days ago",
-      description: "Complete review of NCLEX-RN exam topics",
-      duration: "12 weeks",
-      price: "$299"
-    },
-    {
-      id: 2,
-      title: "Pharmacology Fundamentals",
-      students: 32,
-      status: "active", 
-      lastUpdated: "1 week ago",
-      description: "Essential pharmacology concepts for nursing",
-      duration: "8 weeks",
-      price: "$199"
-    },
-    {
-      id: 3,
-      title: "Medical-Surgical Nursing",
-      students: 28,
-      status: "draft",
-      lastUpdated: "3 days ago",
-      description: "Advanced medical-surgical nursing concepts",
-      duration: "10 weeks",
-      price: "$249"
-    }
-  ]);
+  const [courses, setCourses] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [students, setStudents] = useState([
     {
@@ -96,16 +67,30 @@ export default function InstructorDashboard() {
     }
   ]);
 
-  const [showCreateCourse, setShowCreateCourse] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
-  const [newCourse, setNewCourse] = useState({
-    title: "",
-    description: "",
-    duration: "",
-    price: ""
-  });
+
+  // Load courses on component mount
+  useEffect(() => {
+    loadCourses();
+  }, []);
+
+  const loadCourses = async () => {
+    setLoading(true);
+    try {
+      const result = await getInstructorCourses();
+      if (result.success) {
+        setCourses(result.courses);
+      } else {
+        console.error('Failed to load courses:', result.error);
+      }
+    } catch (error) {
+      console.error('Error loading courses:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const stats = [
     {
@@ -123,17 +108,17 @@ export default function InstructorDashboard() {
       changeType: "positive"
     },
     {
-      title: "Completion Rate",
-      value: "87%",
+      title: "Total Courses",
+      value: courses.length.toString(),
       icon: TrendingUp,
-      change: "+5%",
+      change: "+1",
       changeType: "positive"
     },
     {
-      title: "Avg. Study Time",
-      value: "4.2h",
+      title: "Materials",
+      value: courses.reduce((total, course) => total + (course.course_materials?.length || 0), 0).toString(),
       icon: Clock,
-      change: "+0.3h",
+      change: "+5",
       changeType: "positive"
     }
   ];
@@ -146,37 +131,32 @@ export default function InstructorDashboard() {
     return matchesSearch && matchesStatus;
   });
 
-  // Handle course creation
-  const handleCreateCourse = () => {
-    if (newCourse.title && newCourse.description) {
-      const course = {
-        id: courses.length + 1,
-        title: newCourse.title,
-        students: 0,
-        status: "draft",
-        lastUpdated: "Just now",
-        description: newCourse.description,
-        duration: newCourse.duration,
-        price: newCourse.price
-      };
-      setCourses([...courses, course]);
-      setNewCourse({ title: "", description: "", duration: "", price: "" });
-      setShowCreateCourse(false);
+  // Handle course status change
+  const handleStatusChange = async (courseId: string, newStatus: string) => {
+    try {
+      const result = await updateCourseStatus(courseId, newStatus as 'draft' | 'active' | 'archived');
+      if (result.success) {
+        await loadCourses(); // Reload courses
+      } else {
+        console.error('Failed to update course status:', result.error);
+      }
+    } catch (error) {
+      console.error('Error updating course status:', error);
     }
   };
 
-  // Handle course status change
-  const handleStatusChange = (courseId: number, newStatus: string) => {
-    setCourses(courses.map(course => 
-      course.id === courseId 
-        ? { ...course, status: newStatus, lastUpdated: "Just now" }
-        : course
-    ));
-  };
-
   // Handle course deletion
-  const handleDeleteCourse = (courseId: number) => {
-    setCourses(courses.filter(course => course.id !== courseId));
+  const handleDeleteCourse = async (courseId: string) => {
+    try {
+      const result = await deleteCourse(courseId);
+      if (result.success) {
+        await loadCourses(); // Reload courses
+      } else {
+        console.error('Failed to delete course:', result.error);
+      }
+    } catch (error) {
+      console.error('Error deleting course:', error);
+    }
   };
 
   return (
@@ -264,86 +244,110 @@ export default function InstructorDashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {filteredCourses.map((course) => (
-              <Card key={course.id} className="border-soft hover:border-glow transition-all duration-300">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <CardTitle className="text-lg">{course.title}</CardTitle>
-                      <CardDescription className="mt-1">
-                        {course.students} students enrolled
-                      </CardDescription>
-                      <p className="text-sm text-gray-600 mt-2">{course.description}</p>
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="w-8 h-8 border-4 border-[#9faeed] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading courses...</p>
+            </div>
+          ) : filteredCourses.length === 0 ? (
+            <div className="text-center py-12">
+              <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses found</h3>
+              <p className="text-gray-600 mb-4">Create your first course to get started</p>
+              <Button 
+                onClick={() => window.location.href = '/dashboard/instructor/create-course'}
+                className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Create Course
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {filteredCourses.map((course) => (
+                <Card key={course.id} className="border-soft hover:border-glow transition-all duration-300">
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg">{course.title}</CardTitle>
+                        <CardDescription className="mt-1">
+                          {course.course_enrollments?.[0]?.count || 0} students enrolled
+                        </CardDescription>
+                        <p className="text-sm text-gray-600 mt-2">{course.description}</p>
+                      </div>
+                      <Badge 
+                        variant={course.status === 'active' ? 'default' : 'secondary'}
+                        className={course.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}
+                      >
+                        {course.status}
+                      </Badge>
                     </div>
-                    <Badge 
-                      variant={course.status === 'active' ? 'default' : 'secondary'}
-                      className={course.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}
-                    >
-                      {course.status}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center text-gray-600">
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="flex items-center text-gray-600">
+                          <Clock className="w-4 h-4 mr-2" />
+                          {course.duration}
+                        </div>
+                        <div className="flex items-center text-gray-600">
+                          <Award className="w-4 h-4 mr-2" />
+                          {course.price}
+                        </div>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <BookOpen className="w-4 h-4 mr-2" />
+                        {course.course_materials?.length || 0} materials
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
                         <Clock className="w-4 h-4 mr-2" />
-                        {course.duration}
+                        Created {new Date(course.created_at).toLocaleDateString()}
                       </div>
-                      <div className="flex items-center text-gray-600">
-                        <Award className="w-4 h-4 mr-2" />
-                        {course.price}
+                      
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="border-soft hover:border-glow flex-1"
+                          onClick={() => {/* Handle view course */}}
+                        >
+                          <Eye className="w-4 h-4 mr-2" />
+                          View
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="border-soft hover:border-glow flex-1"
+                          onClick={() => {/* Handle edit course */}}
+                        >
+                          <Edit className="w-4 h-4 mr-2" />
+                          Edit
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="border-soft hover:border-glow text-red-600 hover:text-red-700"
+                          onClick={() => handleDeleteCourse(course.id)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="border-soft hover:border-glow flex-1"
+                          onClick={() => handleStatusChange(course.id, course.status === 'active' ? 'draft' : 'active')}
+                        >
+                          {course.status === 'active' ? 'Deactivate' : 'Activate'}
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Clock className="w-4 h-4 mr-2" />
-                      Last updated {course.lastUpdated}
-                    </div>
-                    
-                    <div className="flex gap-2">
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="border-soft hover:border-glow flex-1"
-                        onClick={() => {/* Handle view course */}}
-                      >
-                        <Eye className="w-4 h-4 mr-2" />
-                        View
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="border-soft hover:border-glow flex-1"
-                        onClick={() => {/* Handle edit course */}}
-                      >
-                        <Edit className="w-4 h-4 mr-2" />
-                        Edit
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="border-soft hover:border-glow text-red-600 hover:text-red-700"
-                        onClick={() => handleDeleteCourse(course.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="border-soft hover:border-glow flex-1"
-                        onClick={() => handleStatusChange(course.id, course.status === 'active' ? 'draft' : 'active')}
-                      >
-                        {course.status === 'active' ? 'Deactivate' : 'Activate'}
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Students Section */}
