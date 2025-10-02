@@ -101,6 +101,11 @@ export async function getInstructorCourses() {
       .order('created_at', { ascending: false });
 
     if (coursesError) {
+      // Check if it's a table doesn't exist error
+      if (coursesError.message.includes('relation "courses" does not exist') || 
+          coursesError.message.includes('relation "public.courses" does not exist')) {
+        throw new Error("Database schema not created yet. Please run the database schema script first.");
+      }
       throw new Error(`Failed to fetch courses: ${coursesError.message}`);
     }
 

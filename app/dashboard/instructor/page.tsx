@@ -81,12 +81,22 @@ export default function InstructorDashboard() {
     try {
       const result = await getInstructorCourses();
       if (result.success) {
-        setCourses(result.courses);
+        setCourses(result.courses || []);
       } else {
         console.error('Failed to load courses:', result.error);
+        setCourses([]);
+        
+        // Show specific error message based on the error
+        if (result.error?.includes('Database schema not created')) {
+          alert('Database setup required: Please run the database schema script in Supabase SQL Editor first.');
+        } else {
+          alert(`Failed to load courses: ${result.error}`);
+        }
       }
     } catch (error) {
       console.error('Error loading courses:', error);
+      setCourses([]);
+      alert('Error loading courses. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
