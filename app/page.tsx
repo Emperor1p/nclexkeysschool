@@ -1,11 +1,43 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CheckCircle, BookOpen, Users, Award, TrendingUp, Clock, Sparkles, Zap, Target } from "lucide-react"
+import { CheckCircle, BookOpen, Users, Award, TrendingUp, Clock, Sparkles, Zap, Target, ChevronLeft, ChevronRight } from "lucide-react"
+import { useState, useEffect } from "react"
+import Image from "next/image"
 
 export default function HomePage() {
+  const [currentTestimony, setCurrentTestimony] = useState(0)
+  
+  const testimonyImages = [
+    "/testimony1.jpg",
+    "/testimony2.jpg", 
+    "/testimony3.jpg",
+    "/testimony4.jpg",
+    "/testimony5.jpg",
+    "/testimony6.jpg"
+  ]
+
+  // Auto-rotate testimonies every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimony((prev) => (prev + 1) % testimonyImages.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [testimonyImages.length])
+
+  const nextTestimony = () => {
+    setCurrentTestimony((prev) => (prev + 1) % testimonyImages.length)
+  }
+
+  const prevTestimony = () => {
+    setCurrentTestimony((prev) => (prev - 1 + testimonyImages.length) % testimonyImages.length)
+  }
+
   const features = [
     {
       icon: BookOpen,
@@ -45,27 +77,6 @@ export default function HomePage() {
     },
   ]
 
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      role: "RN, Class of 2024",
-      content:
-        "NCLEX Keys helped me pass on my first attempt! The practice questions were incredibly similar to the actual exam.",
-      avatar: "SJ",
-    },
-    {
-      name: "Michael Chen",
-      role: "RN, Class of 2024",
-      content: "The instructors are amazing and the content is comprehensive. I felt fully prepared for my NCLEX exam.",
-      avatar: "MC",
-    },
-    {
-      name: "Emily Rodriguez",
-      role: "LPN, Class of 2023",
-      content: "Best investment I made for my nursing career. The study materials and support were exceptional.",
-      avatar: "ER",
-    },
-  ]
 
   return (
     <div className="min-h-screen flex flex-col overflow-hidden">
@@ -229,27 +240,63 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card
-                key={index}
-                className={`glass-strong border border-white/10 hover:border-blue-500/30 hover:scale-105 transition-all duration-300 animate-slide-in-left stagger-${index + 1}`}
-              >
-                <CardContent className="pt-6 space-y-4">
-                  {/* Avatar */}
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-white font-bold text-lg shadow-lg">
-                    {testimonial.avatar}
-                  </div>
+          {/* Testimony Carousel */}
+          <div className="relative max-w-4xl mx-auto">
+            <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+              {/* Main testimony image */}
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src={testimonyImages[currentTestimony]}
+                  alt={`Student testimony ${currentTestimony + 1}`}
+                  fill
+                  className="object-cover transition-all duration-500 ease-in-out"
+                  priority
+                />
+                
+                {/* Overlay gradient for better text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                
+                {/* Navigation arrows */}
+                <button
+                  onClick={prevTestimony}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 hover:scale-110"
+                  aria-label="Previous testimony"
+                >
+                  <ChevronLeft className="h-6 w-6 text-white" />
+                </button>
+                
+                <button
+                  onClick={nextTestimony}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all duration-300 hover:scale-110"
+                  aria-label="Next testimony"
+                >
+                  <ChevronRight className="h-6 w-6 text-white" />
+                </button>
+              </div>
+            </div>
 
-                  <p className="text-muted-foreground leading-relaxed">&ldquo;{testimonial.content}&rdquo;</p>
+            {/* Dots indicator */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {testimonyImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentTestimony(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentTestimony
+                      ? "bg-blue-600 scale-125"
+                      : "bg-white/30 hover:bg-white/50"
+                  }`}
+                  aria-label={`Go to testimony ${index + 1}`}
+                />
+              ))}
+            </div>
 
-                  <div className="pt-2 border-t border-white/10">
-                    <div className="font-semibold">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {/* Testimony counter */}
+            <div className="text-center mt-4">
+              <span className="text-sm text-muted-foreground">
+                {currentTestimony + 1} of {testimonyImages.length}
+              </span>
+            </div>
           </div>
         </div>
       </section>
