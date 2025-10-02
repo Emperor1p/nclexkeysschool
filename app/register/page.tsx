@@ -178,11 +178,13 @@ export default function RegisterPage() {
               <div className="relative">
                 <Input
                   id="fullName"
+                  type="text"
                   placeholder="Enter your full name"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow"
+                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
                   required
+                  autoComplete="name"
                 />
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               </div>
@@ -200,8 +202,9 @@ export default function RegisterPage() {
                   placeholder="Enter your email address"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow"
+                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
                   required
+                  autoComplete="email"
                 />
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               </div>
@@ -219,8 +222,9 @@ export default function RegisterPage() {
                   placeholder="Enter your phone number"
                   value={formData.phoneNumber}
                   onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow"
+                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
                   required
+                  autoComplete="tel"
                 />
                 <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               </div>
@@ -238,8 +242,9 @@ export default function RegisterPage() {
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="h-11 pl-10 pr-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow"
+                  className="h-11 pl-10 pr-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
                   required
+                  autoComplete="new-password"
                 />
                 <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <button
@@ -264,8 +269,9 @@ export default function RegisterPage() {
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="h-11 pl-10 pr-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow"
+                  className="h-11 pl-10 pr-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
                   required
+                  autoComplete="new-password"
                 />
                 <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <button
@@ -286,11 +292,13 @@ export default function RegisterPage() {
               <div className="relative">
                 <Input
                   id="enrollmentToken"
+                  type="text"
                   placeholder="Enter your enrollment token"
                   value={formData.enrollmentToken}
                   onChange={(e) => setFormData({ ...formData, enrollmentToken: e.target.value })}
-                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow"
+                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
                   required
+                  autoComplete="off"
                 />
                 <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               </div>
