@@ -6,7 +6,10 @@
 
 const { createClient } = require('@supabase/supabase-js');
 
-// Supabase configuration
+// Load environment variables
+require('dotenv').config({ path: '.env.local' });
+
+// Supabase configuration - using hardcoded values for now
 const supabaseUrl = 'https://bpyqsxwbxsfozdzustgy.supabase.co';
 const serviceRoleKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJweXFzeHdieHNmb3pdenVzdGd5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTI3OTU5NywiZXhwIjoyMDc0ODU1NTk3fQ.Ljs6egHOepdaxg8PxGTcPI7sprg20-RavNZULp37I6M';
 

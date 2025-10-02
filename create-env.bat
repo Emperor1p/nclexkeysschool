@@ -1,0 +1,11 @@
+@echo off
+echo Creating .env.local file...
+
+echo NEXT_PUBLIC_SUPABASE_URL=https://bpyqsxwbxsfozdzustgy.supabase.co > .env.local
+echo NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJweXFzeHdieHNmb3pdenVzdGd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkyNzk1OTcsImV4cCI6MjA3NDg1NTU5N30.bDrvbgAmKuBMCeGGlzpF7vzYdwdH7iq3cCxrMnBVNt8 >> .env.local
+echo SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJweXFzeHdieHNmb3pdenVzdGd5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTI3OTU5NywiZXhwIjoyMDc0ODU1NTk3fQ.Ljs6egHOepdaxg8PxGTcPI7sprg20-RavNZULp37I6M >> .env.local
+
+echo .env.local file created successfully!
+echo.
+echo Now you can run: npm run setup-admin
+pause
