@@ -63,16 +63,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 animated-bg-morphing overflow-hidden">
-      {/* Advanced animated background shapes */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-primary/30 to-purple-500/30 rounded-full floating-shape-morphing blur-3xl" />
-      <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-full floating-shape-morphing stagger-2 blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full floating-shape-morphing stagger-4 blur-3xl" />
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-gradient-to-br from-background via-background to-primary/5 overflow-hidden">
       
-      <Card className="w-full max-w-md relative z-10 animate-bounce-in glass-ultra shadow-2xl hover:shadow-primary/30 transition-all duration-700 border-soft card-3d-strong">
+      <Card className="w-full max-w-md relative z-10 shadow-2xl border-soft">
         <CardHeader className="space-y-6 pb-8">
           <div className="flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-purple-600 text-primary-foreground shadow-lg hover:scale-110 transition-transform duration-500 hover:rotate-6">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-purple-600 text-primary-foreground shadow-lg">
               <GraduationCap className="h-9 w-9" />
             </div>
           </div>
@@ -100,7 +96,7 @@ export default function LoginPage() {
                 placeholder="john@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="h-11 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
+                className="h-11 border-soft bg-background"
                 required
               />
             </div>
@@ -113,14 +109,14 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="h-11 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
+                className="h-11 border-soft bg-background"
                 required
               />
             </div>
 
             <Button 
               type="submit" 
-              className="w-full h-12 text-base bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" 
+              className="w-full h-12 text-base bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-lg" 
               disabled={loading}
             >
               {loading ? (
@@ -135,7 +131,7 @@ export default function LoginPage() {
 
             <div className="text-center text-sm pt-2">
               <span className="text-muted-foreground">Don't have an account? </span>
-              <Link href="/register" className="text-primary hover:text-purple-600 font-semibold hover:underline transition-colors duration-300">
+              <Link href="/register" className="text-primary hover:text-purple-600 font-semibold hover:underline">
                 Register
               </Link>
             </div>

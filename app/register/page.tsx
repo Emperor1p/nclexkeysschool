@@ -142,15 +142,11 @@ export default function RegisterPage() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-gradient-to-br from-background via-background to-primary/5 overflow-hidden">
-      {/* Subtle whitish animated background shapes */}
-      <div className="absolute top-10 right-10 w-96 h-96 bg-gradient-to-br from-white/5 to-white/10 rounded-full floating-shape-morphing blur-3xl" />
-      <div className="absolute bottom-10 left-20 w-80 h-80 bg-gradient-to-br from-white/3 to-white/8 rounded-full floating-shape-morphing stagger-3 blur-3xl" />
-      <div className="absolute top-1/2 right-1/2 w-72 h-72 bg-gradient-to-br from-white/2 to-white/6 rounded-full floating-shape-morphing stagger-5 blur-3xl" />
       
-      <Card className="w-full max-w-md relative z-10 animate-bounce-in glass-ultra shadow-2xl hover:shadow-purple-500/30 transition-all duration-700 border-soft card-3d-strong">
+      <Card className="w-full max-w-md relative z-10 shadow-2xl border-soft">
         <CardHeader className="space-y-6 pb-6">
           <div className="flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-primary text-primary-foreground shadow-lg hover:scale-110 transition-transform duration-500 hover:rotate-6">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-primary text-primary-foreground shadow-lg">
               <GraduationCap className="h-9 w-9" />
             </div>
           </div>
@@ -164,7 +160,7 @@ export default function RegisterPage() {
         <CardContent className="pb-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <Alert variant="destructive" className="animate-fade-in border-red-500/50">
+              <Alert variant="destructive" className="border-red-500/50">
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
@@ -182,7 +178,7 @@ export default function RegisterPage() {
                   placeholder="Enter your full name"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
+                  className="h-11 pl-10 border-soft bg-background"
                   required
                   autoComplete="name"
                 />
@@ -202,7 +198,7 @@ export default function RegisterPage() {
                   placeholder="Enter your email address"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
+                  className="h-11 pl-10 border-soft bg-background"
                   required
                   autoComplete="email"
                 />
@@ -222,7 +218,7 @@ export default function RegisterPage() {
                   placeholder="Enter your phone number"
                   value={formData.phoneNumber}
                   onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
+                  className="h-11 pl-10 border-soft bg-background"
                   required
                   autoComplete="tel"
                 />
@@ -242,7 +238,7 @@ export default function RegisterPage() {
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="h-11 pl-10 pr-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
+                  className="h-11 pl-10 pr-10 border-soft bg-background"
                   required
                   autoComplete="new-password"
                 />
@@ -269,7 +265,7 @@ export default function RegisterPage() {
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="h-11 pl-10 pr-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
+                  className="h-11 pl-10 pr-10 border-soft bg-background"
                   required
                   autoComplete="new-password"
                 />
@@ -296,7 +292,7 @@ export default function RegisterPage() {
                   placeholder="Enter your enrollment token"
                   value={formData.enrollmentToken}
                   onChange={(e) => setFormData({ ...formData, enrollmentToken: e.target.value })}
-                  className="h-11 pl-10 transition-all duration-300 focus:scale-[1.02] border-soft focus:border-glow bg-background"
+                  className="h-11 pl-10 border-soft bg-background"
                   required
                   autoComplete="off"
                 />
@@ -310,7 +306,7 @@ export default function RegisterPage() {
 
             <Button 
               type="submit" 
-              className="w-full h-12 text-base bg-gradient-to-r from-purple-600 to-primary hover:from-purple-600/90 hover:to-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]" 
+              className="w-full h-12 text-base bg-gradient-to-r from-purple-600 to-primary hover:from-purple-600/90 hover:to-primary/90 shadow-lg" 
               disabled={loading}
             >
               {loading ? (
@@ -325,7 +321,7 @@ export default function RegisterPage() {
 
             <div className="text-center text-sm pt-2">
               <span className="text-muted-foreground">Already have an account? </span>
-              <Link href="/login" className="text-primary hover:text-purple-600 font-semibold hover:underline transition-colors duration-300">
+              <Link href="/login" className="text-primary hover:text-purple-600 font-semibold hover:underline">
                 Login
               </Link>
             </div>
