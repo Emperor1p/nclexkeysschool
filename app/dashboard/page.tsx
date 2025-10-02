@@ -3,6 +3,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server"
 import { DashboardHeader } from "@/components/dashboard/dashboard-header"
 import { DashboardStats } from "@/components/dashboard/dashboard-stats"
 import { CourseList } from "@/components/dashboard/course-list"
+import { CourseMaterials } from "@/components/dashboard/course-materials"
 import { ExternalLinks } from "@/components/dashboard/external-links"
 import { ProgressOverview } from "@/components/dashboard/progress-overview"
 
@@ -79,6 +80,9 @@ export default async function DashboardPage() {
 
         {/* Progress Overview */}
         <ProgressOverview progressPercentage={progressPercentage} />
+
+        {/* Course Materials */}
+        <CourseMaterials courses={courses || []} userProgress={progress || []} />
 
         {/* External Links */}
         <ExternalLinks />

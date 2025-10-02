@@ -11,8 +11,10 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { FileUpload } from "@/components/ui/file-upload"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
-import { ArrowLeft, AlertCircle } from "lucide-react"
+import { ArrowLeft, AlertCircle, Upload, Link as LinkIcon, FileText, Video } from "lucide-react"
 import Link from "next/link"
 
 export default function CreateCoursePage() {
@@ -24,6 +26,8 @@ export default function CreateCoursePage() {
     materialsUrl: "",
     orderIndex: 0,
   })
+  const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null)
+  const [uploadedMaterialsUrl, setUploadedMaterialsUrl] = useState<string | null>(null)
   const [programs, setPrograms] = useState<any[]>([])
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -37,6 +41,28 @@ export default function CreateCoursePage() {
     const supabase = getSupabaseBrowserClient()
     const { data } = await supabase.from("programs").select("*").eq("is_active", true).order("name")
     if (data) setPrograms(data)
+  }
+
+  const handleVideoUpload = async (file: File): Promise<string> => {
+    // For now, we'll simulate file upload by creating a temporary URL
+    // In a real implementation, you would upload to a service like AWS S3, Cloudinary, etc.
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const url = URL.createObjectURL(file)
+        resolve(url)
+      }, 1000)
+    })
+  }
+
+  const handleMaterialsUpload = async (file: File): Promise<string> => {
+    // For now, we'll simulate file upload by creating a temporary URL
+    // In a real implementation, you would upload to a service like AWS S3, Cloudinary, etc.
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const url = URL.createObjectURL(file)
+        resolve(url)
+      }, 1000)
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,8 +92,8 @@ export default function CreateCoursePage() {
         title: formData.title,
         description: formData.description,
         program_id: formData.programId,
-        video_url: formData.videoUrl || null,
-        materials_url: formData.materialsUrl || null,
+        video_url: uploadedVideoUrl || formData.videoUrl || null,
+        materials_url: uploadedMaterialsUrl || formData.materialsUrl || null,
         order_index: formData.orderIndex,
         created_by: user.id,
       })
@@ -150,28 +176,80 @@ export default function CreateCoursePage() {
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="videoUrl">Video URL</Label>
-                <Input
-                  id="videoUrl"
-                  type="url"
-                  placeholder="https://youtube.com/watch?v=..."
-                  value={formData.videoUrl}
-                  onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
-                />
-                <p className="text-xs text-muted-foreground">Link to YouTube, Vimeo, or other video platform</p>
+              <div className="space-y-4">
+                <Label>Video Content</Label>
+                <Tabs defaultValue="upload" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="upload" className="flex items-center gap-2">
+                      <Upload className="h-4 w-4" />
+                      Upload Video
+                    </TabsTrigger>
+                    <TabsTrigger value="link" className="flex items-center gap-2">
+                      <LinkIcon className="h-4 w-4" />
+                      Video Link
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="upload" className="space-y-2">
+                    <FileUpload
+                      onUpload={handleVideoUpload}
+                      accept="video/*"
+                      maxSize={500}
+                      className="w-full"
+                    />
+                    {uploadedVideoUrl && (
+                      <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                        <p className="text-sm text-green-800">Video uploaded successfully!</p>
+                      </div>
+                    )}
+                  </TabsContent>
+                  <TabsContent value="link" className="space-y-2">
+                    <Input
+                      type="url"
+                      placeholder="https://youtube.com/watch?v=..."
+                      value={formData.videoUrl}
+                      onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+                    />
+                    <p className="text-xs text-muted-foreground">Link to YouTube, Vimeo, or other video platform</p>
+                  </TabsContent>
+                </Tabs>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="materialsUrl">Study Materials URL</Label>
-                <Input
-                  id="materialsUrl"
-                  type="url"
-                  placeholder="https://drive.google.com/..."
-                  value={formData.materialsUrl}
-                  onChange={(e) => setFormData({ ...formData, materialsUrl: e.target.value })}
-                />
-                <p className="text-xs text-muted-foreground">Link to Google Drive, Dropbox, or other file storage</p>
+              <div className="space-y-4">
+                <Label>Study Materials</Label>
+                <Tabs defaultValue="upload" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="upload" className="flex items-center gap-2">
+                      <Upload className="h-4 w-4" />
+                      Upload Files
+                    </TabsTrigger>
+                    <TabsTrigger value="link" className="flex items-center gap-2">
+                      <LinkIcon className="h-4 w-4" />
+                      File Link
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="upload" className="space-y-2">
+                    <FileUpload
+                      onUpload={handleMaterialsUpload}
+                      accept=".pdf,.doc,.docx,.ppt,.pptx,.txt"
+                      maxSize={100}
+                      className="w-full"
+                    />
+                    {uploadedMaterialsUrl && (
+                      <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                        <p className="text-sm text-green-800">Materials uploaded successfully!</p>
+                      </div>
+                    )}
+                  </TabsContent>
+                  <TabsContent value="link" className="space-y-2">
+                    <Input
+                      type="url"
+                      placeholder="https://drive.google.com/..."
+                      value={formData.materialsUrl}
+                      onChange={(e) => setFormData({ ...formData, materialsUrl: e.target.value })}
+                    />
+                    <p className="text-xs text-muted-foreground">Link to Google Drive, Dropbox, or other file storage</p>
+                  </TabsContent>
+                </Tabs>
               </div>
 
               <div className="space-y-2">
