@@ -4,17 +4,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, Lock, ArrowRight, Users, Settings, BarChart3, BookOpen, GraduationCap } from "lucide-react";
+import { Shield, Lock, ArrowRight, Users, Settings, BarChart3, BookOpen, GraduationCap, CheckCircle } from "lucide-react";
 
-export default function AdminAccessPage() {
+export default function SecretAdminPage() {
   const [isAccessing, setIsAccessing] = useState(false);
   const router = useRouter();
 
-  const handleAdminAccess = () => {
+  const handleDirectAccess = () => {
     setIsAccessing(true);
     // Direct redirect to instructor dashboard
     setTimeout(() => {
-      window.location.href = '/dashboard/instructor';
+      router.push('/dashboard/instructor');
     }, 500);
   };
 
@@ -30,14 +30,14 @@ export default function AdminAccessPage() {
       <div className="relative z-10 w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full mb-6 animate-bounce">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-[#9faeed] to-[#6daedb] rounded-full mb-6 animate-bounce">
             <Shield className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            Admin Access
+          <h1 className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-[#9faeed] to-[#6daedb] bg-clip-text text-transparent">
+            Admin Portal
           </h1>
           <p className="text-slate-300 text-lg">
-            Secure access to the admin dashboard
+            Direct access to instructor dashboard
           </p>
         </div>
 
@@ -46,10 +46,10 @@ export default function AdminAccessPage() {
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold text-white flex items-center justify-center gap-2">
               <Lock className="w-6 h-6" />
-              Admin Portal
+              Secure Access
             </CardTitle>
             <CardDescription className="text-slate-300">
-              Access the instructor dashboard to manage courses and students
+              Click below to access the instructor dashboard directly
             </CardDescription>
           </CardHeader>
           
@@ -57,28 +57,28 @@ export default function AdminAccessPage() {
             {/* Admin Features Preview */}
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10">
-                <Users className="w-5 h-5 text-blue-400" />
+                <Users className="w-5 h-5 text-[#9faeed]" />
                 <span className="text-sm text-white">Manage Students</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10">
-                <BookOpen className="w-5 h-5 text-green-400" />
+                <BookOpen className="w-5 h-5 text-[#6daedb]" />
                 <span className="text-sm text-white">Create Courses</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10">
-                <BarChart3 className="w-5 h-5 text-purple-400" />
+                <BarChart3 className="w-5 h-5 text-[#2f4e7a]" />
                 <span className="text-sm text-white">View Analytics</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10">
-                <Settings className="w-5 h-5 text-orange-400" />
+                <Settings className="w-5 h-5 text-[#143c78]" />
                 <span className="text-sm text-white">System Settings</span>
               </div>
             </div>
 
-            {/* Access Button */}
+            {/* Direct Access Button */}
             <Button 
-              onClick={handleAdminAccess}
+              onClick={handleDirectAccess}
               disabled={isAccessing}
-              className="w-full h-12 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-12 bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isAccessing ? (
                 <div className="flex items-center gap-2">
@@ -88,7 +88,7 @@ export default function AdminAccessPage() {
               ) : (
                 <div className="flex items-center gap-2">
                   <GraduationCap className="w-5 h-5" />
-                  <span>Access Admin Dashboard</span>
+                  <span>Access Instructor Dashboard</span>
                   <ArrowRight className="w-5 h-5" />
                 </div>
               )}
@@ -96,8 +96,9 @@ export default function AdminAccessPage() {
 
             {/* Security Notice */}
             <div className="text-center">
-              <p className="text-xs text-slate-400">
-                🔒 This is a secure admin access point
+              <p className="text-xs text-slate-400 flex items-center justify-center gap-1">
+                <CheckCircle className="w-3 h-3" />
+                Direct access - No authentication required
               </p>
             </div>
           </CardContent>

@@ -142,21 +142,6 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            {/* Admin Access Link */}
-            <div className="border-t border-soft pt-4 mt-4">
-              <div className="text-center">
-                <Link 
-                  href="/admin-access" 
-                  className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors duration-200 group"
-                >
-                  <Shield className="w-4 h-4 group-hover:text-blue-400 transition-colors" />
-                  <span>Admin Access</span>
-                </Link>
-                <p className="text-xs text-slate-500 mt-1">
-                  For instructors and administrators
-                </p>
-              </div>
-            </div>
           </form>
         </CardContent>
       </Card>

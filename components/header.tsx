@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X, GraduationCap, Sparkles, Shield } from "lucide-react"
+import { Menu, X, GraduationCap, Sparkles } from "lucide-react"
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -67,12 +67,6 @@ export function Header() {
             >
               <Link href="/register">Get Started</Link>
             </Button>
-            <Button variant="outline" asChild className="border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white transition-all duration-300 hover:scale-105">
-              <Link href="/admin-access" className="flex items-center gap-2">
-                <Shield className="w-4 h-4" />
-                Admin
-              </Link>
-            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -104,12 +98,6 @@ export function Header() {
               </Button>
               <Button asChild className="w-full bg-gradient-to-r from-blue-600 to-purple-600">
                 <Link href="/register">Get Started</Link>
-              </Button>
-              <Button variant="outline" asChild className="w-full border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white">
-                <Link href="/admin-access" className="flex items-center justify-center gap-2">
-                  <Shield className="w-4 h-4" />
-                  Admin Access
-                </Link>
               </Button>
             </div>
           </div>
