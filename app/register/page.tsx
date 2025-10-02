@@ -158,7 +158,7 @@ export default function RegisterPage() {
           </div>
         </CardHeader>
         <CardContent className="pb-8">
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
             {error && (
               <Alert variant="destructive" className="border-red-500/50">
                 <AlertCircle className="h-4 w-4" />
@@ -178,11 +178,12 @@ export default function RegisterPage() {
                   placeholder="Enter your full name"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="h-11 pl-10 border-soft bg-background"
+                  className="h-11 pl-10 border-soft bg-background relative z-10"
                   required
                   autoComplete="name"
+                  style={{ pointerEvents: 'auto' }}
                 />
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
               </div>
             </div>
 
@@ -198,11 +199,12 @@ export default function RegisterPage() {
                   placeholder="Enter your email address"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="h-11 pl-10 border-soft bg-background"
+                  className="h-11 pl-10 border-soft bg-background relative z-10"
                   required
                   autoComplete="email"
+                  style={{ pointerEvents: 'auto' }}
                 />
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
               </div>
             </div>
 
@@ -218,11 +220,12 @@ export default function RegisterPage() {
                   placeholder="Enter your phone number"
                   value={formData.phoneNumber}
                   onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-                  className="h-11 pl-10 border-soft bg-background"
+                  className="h-11 pl-10 border-soft bg-background relative z-10"
                   required
                   autoComplete="tel"
+                  style={{ pointerEvents: 'auto' }}
                 />
-                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
               </div>
             </div>
 
@@ -238,11 +241,12 @@ export default function RegisterPage() {
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="h-11 pl-10 pr-10 border-soft bg-background"
+                  className="h-11 pl-10 pr-10 border-soft bg-background relative z-10"
                   required
                   autoComplete="new-password"
+                  style={{ pointerEvents: 'auto' }}
                 />
-                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -265,11 +269,12 @@ export default function RegisterPage() {
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="h-11 pl-10 pr-10 border-soft bg-background"
+                  className="h-11 pl-10 pr-10 border-soft bg-background relative z-10"
                   required
                   autoComplete="new-password"
+                  style={{ pointerEvents: 'auto' }}
                 />
-                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -292,11 +297,12 @@ export default function RegisterPage() {
                   placeholder="Enter your enrollment token"
                   value={formData.enrollmentToken}
                   onChange={(e) => setFormData({ ...formData, enrollmentToken: e.target.value })}
-                  className="h-11 pl-10 border-soft bg-background"
+                  className="h-11 pl-10 border-soft bg-background relative z-10"
                   required
                   autoComplete="off"
+                  style={{ pointerEvents: 'auto' }}
                 />
-                <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
               </div>
               <p className="text-xs text-muted-foreground flex items-center gap-1">
                 <Shield className="h-3 w-3" />
