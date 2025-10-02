@@ -117,9 +117,27 @@ export default function RegisterPage() {
         }
       } catch (err) {
         console.log("Enrollment creation failed:", err)
-        setError("Account created successfully! Please contact admin to complete enrollment setup.")
-        setLoading(false)
-        return
+        // If admin client fails, try with regular client as fallback
+        try {
+          const { error: enrollmentError } = await supabase.from("enrollments").insert({
+            user_id: authData.user.id,
+            program_id: tokenData.program_id,
+            status: "pending",
+            payment_verified: false,
+          })
+
+          if (enrollmentError) {
+            console.log("Regular enrollment error:", enrollmentError)
+            setError("Account created successfully! Please contact admin to complete enrollment setup.")
+            setLoading(false)
+            return
+          }
+        } catch (regularErr) {
+          console.log("Regular enrollment creation failed:", regularErr)
+          setError("Account created successfully! Please contact admin to complete enrollment setup.")
+          setLoading(false)
+          return
+        }
       }
 
       // Mark token as used
