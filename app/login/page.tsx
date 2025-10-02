@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
-import { GraduationCap, AlertCircle } from "lucide-react"
+import { GraduationCap, AlertCircle, Shield } from "lucide-react"
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -140,6 +140,22 @@ export default function LoginPage() {
               <Link href="/register" className="text-primary hover:text-purple-600 font-semibold hover:underline">
                 Register
               </Link>
+            </div>
+
+            {/* Admin Access Link */}
+            <div className="border-t border-soft pt-4 mt-4">
+              <div className="text-center">
+                <Link 
+                  href="/admin-access" 
+                  className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors duration-200 group"
+                >
+                  <Shield className="w-4 h-4 group-hover:text-blue-400 transition-colors" />
+                  <span>Admin Access</span>
+                </Link>
+                <p className="text-xs text-slate-500 mt-1">
+                  For instructors and administrators
+                </p>
+              </div>
             </div>
           </form>
         </CardContent>
