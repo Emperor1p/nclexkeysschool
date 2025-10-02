@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import { getSupabaseAdminClient } from "@/lib/supabase/admin"
-import { GraduationCap, AlertCircle, Eye, EyeOff, User, Mail, Phone, Key, Shield } from "lucide-react"
+import { GraduationCap, AlertCircle, Eye, EyeOff, User, Mail, Phone, Key, Shield, CheckCircle } from "lucide-react"
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -24,6 +24,7 @@ export default function RegisterPage() {
     enrollmentToken: "",
   })
   const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -32,6 +33,7 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+    setSuccess("")
     setLoading(true)
 
     // Validation
@@ -111,7 +113,7 @@ export default function RegisterPage() {
 
         if (enrollmentError) {
           console.log("Enrollment error:", enrollmentError)
-          setError("Account created successfully! Please contact admin to complete enrollment setup.")
+          setSuccess("Account created successfully! Please contact admin to complete enrollment setup.")
           setLoading(false)
           return
         }
@@ -128,13 +130,13 @@ export default function RegisterPage() {
 
           if (enrollmentError) {
             console.log("Regular enrollment error:", enrollmentError)
-            setError("Account created successfully! Please contact admin to complete enrollment setup.")
+            setSuccess("Account created successfully! Please contact admin to complete enrollment setup.")
             setLoading(false)
             return
           }
         } catch (regularErr) {
           console.log("Regular enrollment creation failed:", regularErr)
-          setError("Account created successfully! Please contact admin to complete enrollment setup.")
+          setSuccess("Account created successfully! Please contact admin to complete enrollment setup.")
           setLoading(false)
           return
         }
@@ -150,8 +152,14 @@ export default function RegisterPage() {
         })
         .eq("id", tokenData.id)
 
-      // Redirect to payment verification
-      router.push("/verify-payment")
+      // Show success message
+      setSuccess("Account created successfully! Redirecting to payment verification...")
+      setLoading(false)
+      
+      // Redirect to payment verification after a short delay
+      setTimeout(() => {
+        router.push("/verify-payment")
+      }, 2000)
     } catch (err) {
       setError("An unexpected error occurred")
       setLoading(false)
@@ -181,6 +189,13 @@ export default function RegisterPage() {
               <Alert variant="destructive" className="border-red-500/50">
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
+            {success && (
+              <Alert className="border-green-500/50 bg-green-50 dark:bg-green-950/20">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <AlertDescription className="text-green-800 dark:text-green-200">{success}</AlertDescription>
               </Alert>
             )}
 
