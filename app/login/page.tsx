@@ -140,6 +140,23 @@ export default function LoginPage() {
                 Register
               </Link>
             </div>
+            
+            {/* Debug info - remove this after testing */}
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-xs">
+              <strong>Debug Info:</strong><br/>
+              Email: {formData.email}<br/>
+              Password length: {formData.password.length}<br/>
+              <button 
+                type="button" 
+                onClick={() => {
+                  console.log("Form data:", formData);
+                  console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
+                }}
+                className="mt-2 px-2 py-1 bg-blue-500 text-white rounded text-xs"
+              >
+                Log Form Data
+              </button>
+            </div>
           </form>
         </CardContent>
       </Card>
