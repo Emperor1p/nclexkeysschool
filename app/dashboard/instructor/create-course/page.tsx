@@ -1,281 +1,457 @@
-"use client"
+"use client";
 
-import type React from "react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { FileUpload } from "@/components/ui/file-upload";
+import { 
+  BookOpen, 
+  Video, 
+  FileText, 
+  Image, 
+  Upload, 
+  Plus, 
+  Trash2, 
+  Eye,
+  Download,
+  Play,
+  File,
+  ArrowLeft,
+  Save,
+  CheckCircle
+} from "lucide-react";
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FileUpload } from "@/components/ui/file-upload"
-import { getSupabaseBrowserClient } from "@/lib/supabase/client"
-import { ArrowLeft, AlertCircle, Upload, Link as LinkIcon, FileText, Video } from "lucide-react"
-import Link from "next/link"
+interface CourseMaterial {
+  id: string;
+  type: 'video' | 'pdf' | 'slides';
+  title: string;
+  description: string;
+  file: File | null;
+  url?: string;
+  duration?: string;
+  size?: string;
+}
 
 export default function CreateCoursePage() {
-  const [formData, setFormData] = useState({
+  const router = useRouter();
+  const [courseData, setCourseData] = useState({
     title: "",
     description: "",
-    programId: "",
-    videoUrl: "",
-    materialsUrl: "",
-    orderIndex: 0,
-  })
-  const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null)
-  const [uploadedMaterialsUrl, setUploadedMaterialsUrl] = useState<string | null>(null)
-  const [programs, setPrograms] = useState<any[]>([])
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+    duration: "",
+    price: "",
+    category: "NCLEX-RN"
+  });
 
-  useEffect(() => {
-    loadPrograms()
-  }, [])
+  const [materials, setMaterials] = useState<CourseMaterial[]>([]);
+  const [activeTab, setActiveTab] = useState("basic");
+  const [uploading, setUploading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  const loadPrograms = async () => {
-    const supabase = getSupabaseBrowserClient()
-    const { data } = await supabase.from("programs").select("*").eq("is_active", true).order("name")
-    if (data) setPrograms(data)
-  }
+  // Add new material
+  const addMaterial = (type: 'video' | 'pdf' | 'slides') => {
+    const newMaterial: CourseMaterial = {
+      id: Date.now().toString(),
+      type,
+      title: "",
+      description: "",
+      file: null
+    };
+    setMaterials([...materials, newMaterial]);
+  };
 
-  const handleVideoUpload = async (file: File): Promise<string> => {
-    // For now, we'll simulate file upload by creating a temporary URL
-    // In a real implementation, you would upload to a service like AWS S3, Cloudinary, etc.
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const url = URL.createObjectURL(file)
-        resolve(url)
-      }, 1000)
-    })
-  }
+  // Update material
+  const updateMaterial = (id: string, updates: Partial<CourseMaterial>) => {
+    setMaterials(materials.map(material => 
+      material.id === id ? { ...material, ...updates } : material
+    ));
+  };
 
-  const handleMaterialsUpload = async (file: File): Promise<string> => {
-    // For now, we'll simulate file upload by creating a temporary URL
-    // In a real implementation, you would upload to a service like AWS S3, Cloudinary, etc.
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const url = URL.createObjectURL(file)
-        resolve(url)
-      }, 1000)
-    })
-  }
+  // Remove material
+  const removeMaterial = (id: string) => {
+    setMaterials(materials.filter(material => material.id !== id));
+  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
-
-    if (!formData.title || !formData.programId) {
-      setError("Title and Program are required")
-      setLoading(false)
-      return
-    }
-
+  // Handle file upload
+  const handleFileUpload = async (file: File, materialId: string) => {
+    setUploading(true);
     try {
-      const supabase = getSupabaseBrowserClient()
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (!user) {
-        setError("You must be logged in")
-        setLoading(false)
-        return
-      }
-
-      const { error: insertError } = await supabase.from("courses").insert({
-        title: formData.title,
-        description: formData.description,
-        program_id: formData.programId,
-        video_url: uploadedVideoUrl || formData.videoUrl || null,
-        materials_url: uploadedMaterialsUrl || formData.materialsUrl || null,
-        order_index: formData.orderIndex,
-        created_by: user.id,
-      })
-
-      if (insertError) {
-        setError(insertError.message)
-        setLoading(false)
-        return
-      }
-
-      router.push("/dashboard/instructor")
-    } catch (err) {
-      setError("An unexpected error occurred")
-      setLoading(false)
+      // Simulate file upload
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Update material with file info
+      updateMaterial(materialId, {
+        file,
+        url: URL.createObjectURL(file),
+        size: `${(file.size / 1024 / 1024).toFixed(1)} MB`
+      });
+    } catch (error) {
+      console.error('Upload failed:', error);
+    } finally {
+      setUploading(false);
     }
-  }
+  };
+
+  // Save course
+  const handleSaveCourse = async () => {
+    if (!courseData.title || !courseData.description) {
+      return;
+    }
+
+    setUploading(true);
+    try {
+      // Simulate saving course
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setSuccess(true);
+      
+      // Redirect after success
+      setTimeout(() => {
+        router.push('/dashboard/instructor');
+      }, 2000);
+    } catch (error) {
+      console.error('Save failed:', error);
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8">
-        <Button variant="ghost" asChild className="mb-6">
-          <Link href="/dashboard/instructor">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Dashboard
-          </Link>
-        </Button>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Create New Course</CardTitle>
-            <CardDescription>Add a new course to your program</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-
-              <div className="space-y-2">
-                <Label htmlFor="title">Course Title *</Label>
-                <Input
-                  id="title"
-                  placeholder="Introduction to NCLEX-RN"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  required
-                />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-6">
+            <div className="flex items-center gap-4">
+              <Button 
+                variant="ghost" 
+                onClick={() => router.back()}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </Button>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Create New Course</h1>
+                <p className="text-gray-600">Build your course with videos, PDFs, and slides</p>
               </div>
+            </div>
+            <div className="flex gap-3">
+              <Button variant="outline" className="border-soft hover:border-glow">
+                Save Draft
+              </Button>
+              <Button 
+                onClick={handleSaveCourse}
+                disabled={uploading || !courseData.title || !courseData.description}
+                className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+              >
+                {uploading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Saving...
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <Save className="w-4 h-4" />
+                    Publish Course
+                  </div>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Brief description of the course content..."
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  rows={4}
-                />
-              </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {success && (
+          <Alert className="mb-6 border-green-200 bg-green-50">
+            <CheckCircle className="h-4 w-4 text-green-600" />
+            <AlertDescription className="text-green-800">
+              Course created successfully! Redirecting to dashboard...
+            </AlertDescription>
+          </Alert>
+        )}
 
-              <div className="space-y-2">
-                <Label htmlFor="program">Program *</Label>
-                <Select
-                  value={formData.programId}
-                  onValueChange={(value) => setFormData({ ...formData, programId: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a program" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {programs.map((program) => (
-                      <SelectItem key={program.id} value={program.id}>
-                        {program.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="basic">Basic Info</TabsTrigger>
+            <TabsTrigger value="materials">Course Materials</TabsTrigger>
+            <TabsTrigger value="preview">Preview</TabsTrigger>
+          </TabsList>
 
-              <div className="space-y-4">
-                <Label>Video Content</Label>
-                <Tabs defaultValue="upload" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="upload" className="flex items-center gap-2">
-                      <Upload className="h-4 w-4" />
-                      Upload Video
-                    </TabsTrigger>
-                    <TabsTrigger value="link" className="flex items-center gap-2">
-                      <LinkIcon className="h-4 w-4" />
-                      Video Link
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="upload" className="space-y-2">
-                    <FileUpload
-                      onUpload={handleVideoUpload}
-                      accept="video/*"
-                      maxSize={500}
-                      className="w-full"
-                    />
-                    {uploadedVideoUrl && (
-                      <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-                        <p className="text-sm text-green-800">Video uploaded successfully!</p>
-                      </div>
-                    )}
-                  </TabsContent>
-                  <TabsContent value="link" className="space-y-2">
+          {/* Basic Information Tab */}
+          <TabsContent value="basic" className="space-y-6">
+            <Card className="border-soft">
+              <CardHeader>
+                <CardTitle>Course Information</CardTitle>
+                <CardDescription>
+                  Provide basic details about your course
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="title">Course Title *</Label>
                     <Input
-                      type="url"
-                      placeholder="https://youtube.com/watch?v=..."
-                      value={formData.videoUrl}
-                      onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+                      id="title"
+                      value={courseData.title}
+                      onChange={(e) => setCourseData({...courseData, title: e.target.value})}
+                      placeholder="e.g., NCLEX-RN Comprehensive Review"
+                      className="border-soft"
                     />
-                    <p className="text-xs text-muted-foreground">Link to YouTube, Vimeo, or other video platform</p>
-                  </TabsContent>
-                </Tabs>
-              </div>
-
-              <div className="space-y-4">
-                <Label>Study Materials</Label>
-                <Tabs defaultValue="upload" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="upload" className="flex items-center gap-2">
-                      <Upload className="h-4 w-4" />
-                      Upload Files
-                    </TabsTrigger>
-                    <TabsTrigger value="link" className="flex items-center gap-2">
-                      <LinkIcon className="h-4 w-4" />
-                      File Link
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="upload" className="space-y-2">
-                    <FileUpload
-                      onUpload={handleMaterialsUpload}
-                      accept=".pdf,.doc,.docx,.ppt,.pptx,.txt"
-                      maxSize={100}
-                      className="w-full"
-                    />
-                    {uploadedMaterialsUrl && (
-                      <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-                        <p className="text-sm text-green-800">Materials uploaded successfully!</p>
-                      </div>
-                    )}
-                  </TabsContent>
-                  <TabsContent value="link" className="space-y-2">
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="category">Category</Label>
                     <Input
-                      type="url"
-                      placeholder="https://drive.google.com/..."
-                      value={formData.materialsUrl}
-                      onChange={(e) => setFormData({ ...formData, materialsUrl: e.target.value })}
+                      id="category"
+                      value={courseData.category}
+                      onChange={(e) => setCourseData({...courseData, category: e.target.value})}
+                      className="border-soft"
                     />
-                    <p className="text-xs text-muted-foreground">Link to Google Drive, Dropbox, or other file storage</p>
-                  </TabsContent>
-                </Tabs>
-              </div>
+                  </div>
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="orderIndex">Order Index</Label>
-                <Input
-                  id="orderIndex"
-                  type="number"
-                  placeholder="0"
-                  value={formData.orderIndex}
-                  onChange={(e) => setFormData({ ...formData, orderIndex: Number.parseInt(e.target.value) || 0 })}
-                />
-                <p className="text-xs text-muted-foreground">Lower numbers appear first in the course list</p>
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="description">Course Description *</Label>
+                  <Textarea
+                    id="description"
+                    value={courseData.description}
+                    onChange={(e) => setCourseData({...courseData, description: e.target.value})}
+                    placeholder="Describe what students will learn in this course..."
+                    className="border-soft min-h-[120px]"
+                  />
+                </div>
 
-              <div className="flex gap-3 pt-4">
-                <Button type="submit" disabled={loading} className="flex-1">
-                  {loading ? "Creating..." : "Create Course"}
-                </Button>
-                <Button type="button" variant="outline" onClick={() => router.back()}>
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="duration">Duration</Label>
+                    <Input
+                      id="duration"
+                      value={courseData.duration}
+                      onChange={(e) => setCourseData({...courseData, duration: e.target.value})}
+                      placeholder="e.g., 8 weeks, 40 hours"
+                      className="border-soft"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="price">Price</Label>
+                    <Input
+                      id="price"
+                      value={courseData.price}
+                      onChange={(e) => setCourseData({...courseData, price: e.target.value})}
+                      placeholder="e.g., $199"
+                      className="border-soft"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Course Materials Tab */}
+          <TabsContent value="materials" className="space-y-6">
+            <Card className="border-soft">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BookOpen className="w-5 h-5" />
+                  Course Materials
+                </CardTitle>
+                <CardDescription>
+                  Add videos, PDFs, and slides to your course
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {/* Add Material Buttons */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <Button 
+                    onClick={() => addMaterial('video')}
+                    className="h-20 flex-col border-soft hover:border-glow"
+                    variant="outline"
+                  >
+                    <Video className="w-6 h-6 mb-2 text-red-500" />
+                    <span>Add Video</span>
+                  </Button>
+                  <Button 
+                    onClick={() => addMaterial('pdf')}
+                    className="h-20 flex-col border-soft hover:border-glow"
+                    variant="outline"
+                  >
+                    <FileText className="w-6 h-6 mb-2 text-blue-500" />
+                    <span>Add PDF</span>
+                  </Button>
+                  <Button 
+                    onClick={() => addMaterial('slides')}
+                    className="h-20 flex-col border-soft hover:border-glow"
+                    variant="outline"
+                  >
+                    <Image className="w-6 h-6 mb-2 text-green-500" />
+                    <span>Add Slides</span>
+                  </Button>
+                </div>
+
+                {/* Materials List */}
+                <div className="space-y-4">
+                  {materials.map((material, index) => (
+                    <Card key={material.id} className="border-soft">
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 bg-gray-100 rounded-lg">
+                              {material.type === 'video' && <Video className="w-5 h-5 text-red-500" />}
+                              {material.type === 'pdf' && <FileText className="w-5 h-5 text-blue-500" />}
+                              {material.type === 'slides' && <Image className="w-5 h-5 text-green-500" />}
+                            </div>
+                            <div>
+                              <h4 className="font-semibold">
+                                {material.title || `New ${material.type}`}
+                              </h4>
+                              <Badge variant="outline" className="text-xs">
+                                {material.type.toUpperCase()}
+                              </Badge>
+                            </div>
+                          </div>
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            onClick={() => removeMaterial(material.id)}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-3">
+                            <div>
+                              <Label>Title</Label>
+                              <Input
+                                value={material.title}
+                                onChange={(e) => updateMaterial(material.id, { title: e.target.value })}
+                                placeholder={`Enter ${material.type} title`}
+                                className="border-soft"
+                              />
+                            </div>
+                            <div>
+                              <Label>Description</Label>
+                              <Textarea
+                                value={material.description}
+                                onChange={(e) => updateMaterial(material.id, { description: e.target.value })}
+                                placeholder={`Describe this ${material.type}`}
+                                className="border-soft"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="space-y-3">
+                            <div>
+                              <Label>Upload File</Label>
+                              <FileUpload
+                                onUpload={(file) => handleFileUpload(file, material.id)}
+                                accept={material.type === 'video' ? 'video/*' : material.type === 'pdf' ? '.pdf' : 'image/*'}
+                                maxSize={material.type === 'video' ? 500 : 50}
+                                className="border-soft"
+                              />
+                            </div>
+                            
+                            {material.file && (
+                              <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                                <div className="flex items-center gap-2 text-green-800">
+                                  <CheckCircle className="w-4 h-4" />
+                                  <span className="text-sm font-medium">File uploaded successfully</span>
+                                </div>
+                                <div className="text-xs text-green-600 mt-1">
+                                  {material.file.name} ({material.size})
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+
+                  {materials.length === 0 && (
+                    <div className="text-center py-12 text-gray-500">
+                      <BookOpen className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                      <p>No materials added yet. Click the buttons above to add content.</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Preview Tab */}
+          <TabsContent value="preview" className="space-y-6">
+            <Card className="border-soft">
+              <CardHeader>
+                <CardTitle>Course Preview</CardTitle>
+                <CardDescription>
+                  How your course will appear to students
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">{courseData.title || "Course Title"}</h3>
+                    <p className="text-gray-600 mt-2">{courseData.description || "Course description will appear here"}</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="text-sm text-gray-600">Duration</div>
+                      <div className="font-semibold">{courseData.duration || "TBD"}</div>
+                    </div>
+                    <div className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="text-sm text-gray-600">Price</div>
+                      <div className="font-semibold">{courseData.price || "TBD"}</div>
+                    </div>
+                    <div className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="text-sm text-gray-600">Materials</div>
+                      <div className="font-semibold">{materials.length}</div>
+                    </div>
+                    <div className="text-center p-3 bg-gray-50 rounded-lg">
+                      <div className="text-sm text-gray-600">Category</div>
+                      <div className="font-semibold">{courseData.category}</div>
+                    </div>
+                  </div>
+
+                  {materials.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold mb-3">Course Materials</h4>
+                      <div className="space-y-2">
+                        {materials.map((material, index) => (
+                          <div key={material.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                            <div className="p-2 bg-white rounded">
+                              {material.type === 'video' && <Video className="w-4 h-4 text-red-500" />}
+                              {material.type === 'pdf' && <FileText className="w-4 h-4 text-blue-500" />}
+                              {material.type === 'slides' && <Image className="w-4 h-4 text-green-500" />}
+                            </div>
+                            <div className="flex-1">
+                              <div className="font-medium">{material.title || `Material ${index + 1}`}</div>
+                              <div className="text-sm text-gray-600">{material.description || "No description"}</div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              {material.type === 'video' && <Play className="w-4 h-4 text-gray-400" />}
+                              {material.type === 'pdf' && <File className="w-4 h-4 text-gray-400" />}
+                              {material.type === 'slides' && <Image className="w-4 h-4 text-gray-400" />}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
-  )
+  );
 }
