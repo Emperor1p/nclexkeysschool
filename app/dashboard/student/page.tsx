@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getStudentCourses, enrollInCourse } from "@/lib/actions/courses";
+import { getStudentCourses, enrollInCourse, getAllCourses } from "@/lib/actions/courses";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -50,11 +50,14 @@ export default function StudentDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedCourse, setSelectedCourse] = useState<any | null>(null);
   const [enrollments, setEnrollments] = useState<any[]>([]);
+  const [availableCourses, setAvailableCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [enrolling, setEnrolling] = useState<string | null>(null);
 
   // Load student courses on component mount
   useEffect(() => {
     loadStudentCourses();
+    loadAvailableCourses();
   }, []);
 
   const loadStudentCourses = async () => {
@@ -70,6 +73,39 @@ export default function StudentDashboard() {
       console.error('Error loading courses:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadAvailableCourses = async () => {
+    try {
+      const result = await getAllCourses();
+      if (result.success) {
+        setAvailableCourses(result.courses);
+      } else {
+        console.error('Failed to load available courses:', result.error);
+      }
+    } catch (error) {
+      console.error('Error loading available courses:', error);
+    }
+  };
+
+  const handleEnrollInCourse = async (courseId: string) => {
+    setEnrolling(courseId);
+    try {
+      const result = await enrollInCourse(courseId);
+      if (result.success) {
+        // Reload both enrolled and available courses
+        await loadStudentCourses();
+        await loadAvailableCourses();
+        alert('Successfully enrolled in course!');
+      } else {
+        alert(`Failed to enroll: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('Error enrolling in course:', error);
+      alert('Error enrolling in course. Please try again.');
+    } finally {
+      setEnrolling(null);
     }
   };
 
@@ -193,8 +229,9 @@ export default function StudentDashboard() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="overview">My Courses</TabsTrigger>
+            <TabsTrigger value="browse">Browse Courses</TabsTrigger>
             <TabsTrigger value="materials">Course Materials</TabsTrigger>
           </TabsList>
 
@@ -269,6 +306,105 @@ export default function StudentDashboard() {
                     </CardContent>
                   </Card>
                 ))}
+              </div>
+            )}
+          </TabsContent>
+
+          {/* Browse Courses Tab */}
+          <TabsContent value="browse" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-gray-900">Available Courses</h2>
+              <p className="text-gray-600">Discover and enroll in new courses</p>
+            </div>
+
+            {availableCourses.length === 0 ? (
+              <div className="text-center py-12">
+                <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses available</h3>
+                <p className="text-gray-600">Check back later for new courses</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {availableCourses.map((course) => {
+                  const isEnrolled = enrollments.some(e => e.course_id === course.id);
+                  const isEnrolling = enrolling === course.id;
+                  
+                  return (
+                    <Card key={course.id} className="border-soft hover:border-glow transition-all duration-300">
+                      <CardHeader>
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <CardTitle className="text-lg">{course.title}</CardTitle>
+                            <CardDescription className="mt-1">
+                              by {course.users?.full_name || 'Instructor'}
+                            </CardDescription>
+                            <p className="text-sm text-gray-600 mt-2">{course.description}</p>
+                          </div>
+                          <Badge 
+                            variant={isEnrolled ? 'default' : 'secondary'}
+                            className={isEnrolled ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}
+                          >
+                            {isEnrolled ? 'Enrolled' : 'Available'}
+                          </Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div className="flex items-center text-gray-600">
+                              <Clock className="w-4 h-4 mr-2" />
+                              {course.duration}
+                            </div>
+                            <div className="flex items-center text-gray-600">
+                              <Award className="w-4 h-4 mr-2" />
+                              {course.price}
+                            </div>
+                          </div>
+                          <div className="flex items-center text-sm text-gray-600">
+                            <BookOpen className="w-4 h-4 mr-2" />
+                            {course.course_materials?.length || 0} materials
+                          </div>
+                          <div className="flex items-center text-sm text-gray-600">
+                            <Calendar className="w-4 h-4 mr-2" />
+                            Created {new Date(course.created_at).toLocaleDateString()}
+                          </div>
+                          
+                          <div className="flex gap-2">
+                            {isEnrolled ? (
+                              <Button 
+                                className="flex-1 bg-green-500 hover:bg-green-600 text-white"
+                                onClick={() => {
+                                  setSelectedCourse(enrollments.find(e => e.course_id === course.id));
+                                  setActiveTab('materials');
+                                }}
+                              >
+                                Continue Learning
+                              </Button>
+                            ) : (
+                              <Button 
+                                className="flex-1 bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                                onClick={() => handleEnrollInCourse(course.id)}
+                                disabled={isEnrolling}
+                              >
+                                {isEnrolling ? (
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    Enrolling...
+                                  </div>
+                                ) : (
+                                  'Enroll Now'
+                                )}
+                              </Button>
+                            )}
+                            <Button variant="outline" className="border-soft hover:border-glow">
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             )}
           </TabsContent>

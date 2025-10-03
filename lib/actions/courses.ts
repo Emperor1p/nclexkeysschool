@@ -295,6 +295,72 @@ export async function deleteCourse(courseId: string) {
   }
 }
 
+export async function getAllCourses() {
+  const supabase = await getSupabaseServerClient();
+  
+  try {
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      throw new Error("User not authenticated");
+    }
+
+    // Get all active courses with materials
+    let courses, coursesError;
+    
+    try {
+      const result = await supabase
+        .from('courses')
+        .select(`
+          *,
+          course_materials(*),
+          users!courses_instructor_id_fkey(full_name)
+        `)
+        .eq('status', 'active')
+        .order('created_at', { ascending: false });
+      
+      courses = result.data;
+      coursesError = result.error;
+    } catch (relationshipError) {
+      // Fallback to separate queries
+      console.log('Relationship query failed for all courses, trying separate queries...');
+      
+      const { data: coursesData, error: coursesErr } = await supabase
+        .from('courses')
+        .select('*')
+        .eq('status', 'active')
+        .order('created_at', { ascending: false });
+      
+      if (coursesErr) {
+        coursesError = coursesErr;
+      } else {
+        // Get materials separately
+        const courseIds = coursesData?.map(c => c.id) || [];
+        
+        const { data: materials } = await supabase
+          .from('course_materials')
+          .select('*')
+          .in('course_id', courseIds);
+        
+        // Combine the data
+        courses = coursesData?.map(course => ({
+          ...course,
+          course_materials: materials?.filter(m => m.course_id === course.id) || [],
+          users: { full_name: 'Instructor' } // Fallback instructor name
+        }));
+      }
+    }
+
+    if (coursesError) {
+      throw new Error(`Failed to fetch courses: ${coursesError.message}`);
+    }
+
+    return { success: true, courses: courses || [] };
+  } catch (error) {
+    console.error('Error fetching all courses:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+}
+
 export async function enrollInCourse(courseId: string) {
   const supabase = await getSupabaseServerClient();
   
