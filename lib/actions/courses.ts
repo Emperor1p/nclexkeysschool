@@ -45,7 +45,7 @@ export async function createCourse(
         duration: courseData.duration,
         price: courseData.price,
         category: courseData.category,
-        status: 'draft'
+        status: 'active'
       })
       .select()
       .single();

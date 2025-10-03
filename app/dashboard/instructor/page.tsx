@@ -169,6 +169,21 @@ export default function InstructorDashboard() {
     }
   };
 
+  // Handle activating all courses
+  const handleActivateAllCourses = async () => {
+    try {
+      const draftCourses = courses.filter(c => c.status === 'draft');
+      for (const course of draftCourses) {
+        await updateCourseStatus(course.id, 'active');
+      }
+      await loadCourses(); // Reload courses
+      alert(`Activated ${draftCourses.length} courses! Students can now see them.`);
+    } catch (error) {
+      console.error('Error activating all courses:', error);
+      alert('Error activating courses. Please try again.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
@@ -193,6 +208,16 @@ export default function InstructorDashboard() {
                 <BarChart3 className="w-4 h-4 mr-2" />
                 Analytics
               </Button>
+              {courses.some(c => c.status === 'draft') && (
+                <Button 
+                  variant="outline" 
+                  onClick={handleActivateAllCourses}
+                  className="border-green-500 text-green-600 hover:bg-green-50"
+                >
+                  <CheckCircle className="w-4 h-4 mr-2" />
+                  Activate All Courses
+                </Button>
+              )}
               <Button 
                 onClick={() => window.location.href = '/dashboard/instructor/create-course'}
                 className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
@@ -345,12 +370,22 @@ export default function InstructorDashboard() {
                       <div className="flex gap-2">
                         <Button 
                           size="sm" 
-                          variant="outline" 
-                          className="border-soft hover:border-glow flex-1"
+                          variant={course.status === 'active' ? 'default' : 'outline'}
+                          className={`flex-1 ${
+                            course.status === 'active' 
+                              ? 'bg-green-500 hover:bg-green-600 text-white' 
+                              : 'border-soft hover:border-glow'
+                          }`}
                           onClick={() => handleStatusChange(course.id, course.status === 'active' ? 'draft' : 'active')}
                         >
-                          {course.status === 'active' ? 'Deactivate' : 'Activate'}
+                          {course.status === 'active' ? '✓ Active' : 'Activate'}
                         </Button>
+                        {course.status === 'active' && (
+                          <div className="flex items-center text-xs text-green-600">
+                            <CheckCircle className="w-3 h-3 mr-1" />
+                            Visible to students
+                          </div>
+                        )}
                       </div>
                     </div>
                   </CardContent>
