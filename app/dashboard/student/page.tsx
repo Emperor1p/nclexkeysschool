@@ -47,7 +47,7 @@ interface Course {
 }
 
 export default function StudentDashboard() {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("browse"); // Default to browse tab
   const [selectedCourse, setSelectedCourse] = useState<any | null>(null);
   const [enrollments, setEnrollments] = useState<any[]>([]);
   const [availableCourses, setAvailableCourses] = useState<any[]>([]);
@@ -250,8 +250,14 @@ export default function StudentDashboard() {
             ) : enrollments.length === 0 ? (
               <div className="text-center py-12">
                 <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses enrolled</h3>
-                <p className="text-gray-600 mb-4">Enroll in courses to start learning</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses enrolled yet</h3>
+                <p className="text-gray-600 mb-4">Browse and enroll in courses to start your learning journey</p>
+                <Button 
+                  onClick={() => setActiveTab('browse')}
+                  className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                >
+                  Browse Available Courses
+                </Button>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -325,8 +331,13 @@ export default function StudentDashboard() {
             {availableCourses.length === 0 ? (
               <div className="text-center py-12">
                 <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses available</h3>
-                <p className="text-gray-600">Check back later for new courses</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No courses available yet</h3>
+                <p className="text-gray-600 mb-4">Instructors haven't published any courses yet</p>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+                  <p className="text-sm text-blue-800">
+                    <strong>Tip:</strong> Ask your instructor to create and publish courses, or check back later for new content.
+                  </p>
+                </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
