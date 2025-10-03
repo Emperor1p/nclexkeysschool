@@ -304,6 +304,8 @@ export async function getAllCourses() {
       throw new Error("User not authenticated");
     }
 
+    console.log('Getting all courses for user:', user.id);
+
     // Get all active courses with materials
     let courses, coursesError;
     
@@ -351,9 +353,11 @@ export async function getAllCourses() {
     }
 
     if (coursesError) {
+      console.error('Courses error:', coursesError);
       throw new Error(`Failed to fetch courses: ${coursesError.message}`);
     }
 
+    console.log('Found courses:', courses);
     return { success: true, courses: courses || [] };
   } catch (error) {
     console.error('Error fetching all courses:', error);

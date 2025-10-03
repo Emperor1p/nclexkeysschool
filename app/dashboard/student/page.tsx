@@ -78,14 +78,19 @@ export default function StudentDashboard() {
 
   const loadAvailableCourses = async () => {
     try {
+      console.log('Loading available courses...');
       const result = await getAllCourses();
+      console.log('Available courses result:', result);
       if (result.success) {
         setAvailableCourses(result.courses);
+        console.log('Available courses loaded:', result.courses);
       } else {
         console.error('Failed to load available courses:', result.error);
+        alert(`Failed to load courses: ${result.error}`);
       }
     } catch (error) {
       console.error('Error loading available courses:', error);
+      alert('Error loading available courses. Please check the console for details.');
     }
   };
 
