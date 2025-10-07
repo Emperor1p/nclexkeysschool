@@ -4,42 +4,38 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ========================================
-   NCLEX KEYS - SIMPLIFIED 3-COLOR PALETTE
-   Inspired by modern travel agency design
+   NCLEX KEYS - ORIGINAL COLOR PALETTE
+   Professional Healthcare Education
    ======================================== */
 
 :root {
-  /* Primary 3-Color Palette */
-  --navy-blue: #424769;           /* Dark navy background */
-  --peach-accent: #f9b17a;        /* Warm peach for buttons/accents */
-  --white-clean: #ffffff;         /* Clean white for text */
-  
-  /* Subtle variants for depth */
-  --navy-dark: #2d3250;           /* Slightly darker navy */
-  --navy-light: #676f9d;          /* Lighter navy for borders */
-  --peach-light: #fbd9b7;         /* Light peach for hover */
-  --peach-dark: #f49c5c;          /* Darker peach for active states */
+  /* NCLEX Blue Gradient Palette */
+  --nclex-light: #9faeed;         /* Light blue (159,174,237) */
+  --nclex-blue: #6daedb;          /* Medium blue (109,174,219) */
+  --nclex-dark: #2f4e7a;          /* Dark blue (47,78,122) */
+  --nclex-darker: #143c78;        /* Darker blue (20,60,120) */
+  --nclex-deepest: #0a0e1a;       /* Deepest blue (10,14,26) */
   
   /* Semantic colors using the palette */
-  --background: var(--navy-blue);
-  --foreground: var(--white-clean);
-  --primary: var(--peach-accent);
-  --primary-foreground: var(--navy-blue);
-  --secondary: var(--navy-light);
-  --secondary-foreground: var(--white-clean);
-  --muted: var(--navy-light);
-  --muted-foreground: rgba(255, 255, 255, 0.7);
-  --accent: var(--peach-accent);
-  --accent-foreground: var(--navy-blue);
-  --destructive: #ef4444;
-  --destructive-foreground: var(--white-clean);
-  --border: var(--navy-light);
-  --input: var(--navy-dark);
-  --ring: var(--peach-accent);
-  --card: var(--navy-blue);
-  --card-foreground: var(--white-clean);
-  --popover: var(--navy-dark);
-  --popover-foreground: var(--white-clean);
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
   
   /* Radius */
   --radius: 0.75rem;
@@ -80,8 +76,8 @@
 }
 
 .border-glow {
-  border: 1px solid var(--peach-accent);
-  box-shadow: 0 0 20px rgba(249, 177, 122, 0.3);
+  border: 1px solid var(--nclex-blue);
+  box-shadow: 0 0 20px rgba(109, 174, 219, 0.3);
 }
 
 .border-invisible {
@@ -123,10 +119,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(249, 177, 122, 0.3);
+    box-shadow: 0 0 20px rgba(109, 174, 219, 0.3);
   }
   50% {
-    box-shadow: 0 0 40px rgba(249, 177, 122, 0.6);
+    box-shadow: 0 0 40px rgba(109, 174, 219, 0.6);
   }
 }
 
@@ -207,8 +203,6 @@
   }
   body {
     @apply bg-background text-foreground;
-    background: var(--navy-blue);
-    color: var(--white-clean);
   }
 }
 
@@ -223,7 +217,7 @@
 
 .interactive-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(249, 177, 122, 0.2);
+  box-shadow: 0 10px 30px rgba(109, 174, 219, 0.2);
 }
 
 /* ========================================
