@@ -72,16 +72,22 @@
    ======================================== */
 
 .border-soft {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(109, 174, 219, 0.2);
 }
 
 .border-glow {
-  border: 1px solid var(--nclex-blue);
-  box-shadow: 0 0 20px rgba(109, 174, 219, 0.3);
+  border: 2px solid var(--nclex-blue);
+  box-shadow: 0 0 20px rgba(109, 174, 219, 0.4);
 }
 
 .border-invisible {
   border: 1px solid transparent;
+}
+
+/* Hover state for clickable cards */
+.border-soft:hover {
+  border-color: rgba(109, 174, 219, 0.5);
+  box-shadow: 0 4px 12px rgba(109, 174, 219, 0.2);
 }
 
 /* ========================================
@@ -213,11 +219,153 @@
 .interactive-card {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+  position: relative;
 }
 
 .interactive-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(109, 174, 219, 0.2);
+  box-shadow: 0 10px 30px rgba(109, 174, 219, 0.3);
+  border-color: rgba(109, 174, 219, 0.6) !important;
+}
+
+.interactive-card:active {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(109, 174, 219, 0.2);
+}
+
+/* Button enhancement for better clickability */
+button, .btn, [role="button"] {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+button:hover:not(:disabled), .btn:hover:not(:disabled), [role="button"]:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(109, 174, 219, 0.25);
+}
+
+button:active:not(:disabled), .btn:active:not(:disabled), [role="button"]:active:not(:disabled) {
+  transform: translateY(0px);
+  box-shadow: 0 2px 6px rgba(109, 174, 219, 0.2);
+}
+
+/* Focus visible for accessibility and clarity */
+button:focus-visible, .btn:focus-visible, [role="button"]:focus-visible,
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid var(--nclex-blue);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(109, 174, 219, 0.2);
+}
+
+/* Link hover states */
+a:not(.no-hover) {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+a:not(.no-hover):hover {
+  color: var(--nclex-blue);
+  text-decoration: underline;
+  text-decoration-color: var(--nclex-blue);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Input field enhancement */
+input:not([type="checkbox"]):not([type="radio"]):hover,
+textarea:hover,
+select:hover {
+  border-color: rgba(109, 174, 219, 0.5);
+  box-shadow: 0 0 0 3px rgba(109, 174, 219, 0.1);
+}
+
+/* Disabled state clarity */
+button:disabled, .btn:disabled, [role="button"]:disabled,
+input:disabled, textarea:disabled, select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(50%);
+}
+
+/* ========================================
+   COLOR PSYCHOLOGY FOR ACTIONS
+   ======================================== */
+
+/* Primary actions - Blue (Trust, Professionalism) */
+.btn-primary, [class*="bg-gradient"] {
+  background: linear-gradient(135deg, var(--nclex-light) 0%, var(--nclex-blue) 100%);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(109, 174, 219, 0.3);
+}
+
+.btn-primary:hover, [class*="bg-gradient"]:hover {
+  background: linear-gradient(135deg, var(--nclex-blue) 0%, var(--nclex-dark) 100%);
+  box-shadow: 0 4px 16px rgba(109, 174, 219, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Success actions - Green (Confirmation, Positive) */
+.btn-success, .bg-green-500, .text-green-600 {
+  --action-color: #10b981;
+}
+
+button.bg-green-500:hover, .btn-success:hover {
+  background-color: #059669 !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Destructive actions - Red (Warning, Delete) */
+.btn-destructive, .text-red-600, [class*="text-red"] {
+  --action-color: #ef4444;
+}
+
+button:hover .text-red-600 {
+  color: #dc2626 !important;
+}
+
+button.text-red-600:hover, .btn-destructive:hover {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Info/Secondary actions - Light Blue (Information) */
+.btn-secondary {
+  background-color: rgba(109, 174, 219, 0.1);
+  border: 2px solid rgba(109, 174, 219, 0.3);
+  color: var(--nclex-dark);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(109, 174, 219, 0.2);
+  border-color: rgba(109, 174, 219, 0.5);
+  box-shadow: 0 4px 12px rgba(109, 174, 219, 0.2);
+}
+
+/* Active/Selected state - Bright Blue (Engagement) */
+[class*="bg-blue-500"], .active, [aria-selected="true"] {
+  background-color: var(--nclex-blue) !important;
+  color: white !important;
+  box-shadow: 0 0 0 3px rgba(109, 174, 219, 0.3);
+}
+
+/* Hover effect for badges and status indicators */
+.badge:hover, [class*="Badge"]:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(109, 174, 219, 0.3);
+}
+
+/* Clickable icons */
+svg:hover, .icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* Progress bars - Visual feedback */
+[role="progressbar"], .progress-bar {
+  background: linear-gradient(90deg, var(--nclex-light), var(--nclex-blue));
+  box-shadow: 0 2px 4px rgba(109, 174, 219, 0.2);
+  border-radius: 999px;
 }
 
 /* ========================================
@@ -232,3 +380,97 @@
 .stagger-6 { animation-delay: 0.6s; }
 .stagger-7 { animation-delay: 0.7s; }
 .stagger-8 { animation-delay: 0.8s; }
+
+/* ========================================
+   VISUAL FEEDBACK UTILITIES
+   ======================================== */
+
+/* Pulse effect for important CTAs */
+@keyframes pulse-attention {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(109, 174, 219, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(109, 174, 219, 0);
+  }
+}
+
+.pulse-cta {
+  animation: pulse-attention 2s infinite;
+}
+
+/* Ripple effect on click */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Cursor pointer for all clickable elements */
+button, a, [role="button"], [onclick], .cursor-pointer,
+input[type="submit"], input[type="button"], 
+select, label[for], .clickable {
+  cursor: pointer !important;
+}
+
+/* Visual hint: lift on hover */
+.lift-on-hover {
+  transition: all 0.3s ease;
+}
+
+.lift-on-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(109, 174, 219, 0.25);
+}
+
+/* Glow effect for important elements */
+.glow-on-hover {
+  transition: all 0.3s ease;
+}
+
+.glow-on-hover:hover {
+  box-shadow: 0 0 20px rgba(109, 174, 219, 0.5),
+              0 0 40px rgba(109, 174, 219, 0.3);
+  border-color: var(--nclex-blue);
+}
+
+/* Scale up slightly on hover for cards */
+.scale-on-hover {
+  transition: transform 0.3s ease;
+}
+
+.scale-on-hover:hover {
+  transform: scale(1.02);
+}
+
+/* Brightness boost for images/icons on hover */
+img:hover, .img-hover:hover {
+  filter: brightness(1.1);
+  transition: filter 0.2s ease;
+}
+
+/* Underline animation for links */
+a.animated-link {
+  position: relative;
+  text-decoration: none;
+}
+
+a.animated-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--nclex-blue);
+  transition: width 0.3s ease;
+}
+
+a.animated-link:hover::after {
+  width: 100%;
+}
