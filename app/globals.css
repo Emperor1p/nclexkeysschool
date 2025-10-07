@@ -3,42 +3,75 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ========================================
-   NCLEX KEYS - ORIGINAL COLOR PALETTE
-   Professional Healthcare Education
-   ======================================== */
-
 :root {
-  /* NCLEX Blue Gradient Palette */
-  --nclex-light: #9faeed;         /* Light blue (159,174,237) */
-  --nclex-blue: #6daedb;          /* Medium blue (109,174,219) */
-  --nclex-dark: #2f4e7a;          /* Dark blue (47,78,122) */
-  --nclex-darker: #143c78;        /* Darker blue (20,60,120) */
-  --nclex-deepest: #0a0e1a;       /* Deepest blue (10,14,26) */
-  
-  /* Semantic colors using the palette */
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 221.2 83.2% 53.3%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 221.2 83.2% 53.3%;
-  
-  /* Radius */
-  --radius: 0.75rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
 }
 
 @theme inline {
@@ -72,12 +105,12 @@
    ======================================== */
 
 .border-soft {
-  border: 1px solid rgba(109, 174, 219, 0.2);
+  border: 1px solid hsl(var(--border));
 }
 
 .border-glow {
-  border: 2px solid var(--nclex-blue);
-  box-shadow: 0 0 20px rgba(109, 174, 219, 0.4);
+  border: 2px solid hsl(var(--primary));
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
 }
 
 .border-invisible {
@@ -86,8 +119,8 @@
 
 /* Hover state for clickable cards */
 .border-soft:hover {
-  border-color: rgba(109, 174, 219, 0.5);
-  box-shadow: 0 4px 12px rgba(109, 174, 219, 0.2);
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.15);
 }
 
 /* ========================================
@@ -125,10 +158,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(109, 174, 219, 0.3);
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
   }
   50% {
-    box-shadow: 0 0 40px rgba(109, 174, 219, 0.6);
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
   }
 }
 
@@ -224,13 +257,13 @@
 
 .interactive-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(109, 174, 219, 0.3);
-  border-color: rgba(109, 174, 219, 0.6) !important;
+  box-shadow: 0 10px 30px hsl(var(--primary) / 0.2);
+  border-color: hsl(var(--primary) / 0.6) !important;
 }
 
 .interactive-card:active {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(109, 174, 219, 0.2);
+  box-shadow: 0 5px 15px hsl(var(--primary) / 0.15);
 }
 
 /* Button enhancement for better clickability */
@@ -241,20 +274,20 @@ button, .btn, [role="button"] {
 
 button:hover:not(:disabled), .btn:hover:not(:disabled), [role="button"]:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(109, 174, 219, 0.25);
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.2);
 }
 
 button:active:not(:disabled), .btn:active:not(:disabled), [role="button"]:active:not(:disabled) {
   transform: translateY(0px);
-  box-shadow: 0 2px 6px rgba(109, 174, 219, 0.2);
+  box-shadow: 0 2px 6px hsl(var(--primary) / 0.15);
 }
 
 /* Focus visible for accessibility and clarity */
 button:focus-visible, .btn:focus-visible, [role="button"]:focus-visible,
 input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 3px solid var(--nclex-blue);
+  outline: 3px solid hsl(var(--ring));
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(109, 174, 219, 0.2);
+  box-shadow: 0 0 0 4px hsl(var(--ring) / 0.2);
 }
 
 /* Link hover states */
@@ -264,9 +297,9 @@ a:not(.no-hover) {
 }
 
 a:not(.no-hover):hover {
-  color: var(--nclex-blue);
+  color: hsl(var(--primary));
   text-decoration: underline;
-  text-decoration-color: var(--nclex-blue);
+  text-decoration-color: hsl(var(--primary));
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
 }
@@ -275,8 +308,8 @@ a:not(.no-hover):hover {
 input:not([type="checkbox"]):not([type="radio"]):hover,
 textarea:hover,
 select:hover {
-  border-color: rgba(109, 174, 219, 0.5);
-  box-shadow: 0 0 0 3px rgba(109, 174, 219, 0.1);
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
 }
 
 /* Disabled state clarity */
@@ -291,17 +324,17 @@ input:disabled, textarea:disabled, select:disabled {
    COLOR PSYCHOLOGY FOR ACTIONS
    ======================================== */
 
-/* Primary actions - Blue (Trust, Professionalism) */
-.btn-primary, [class*="bg-gradient"] {
-  background: linear-gradient(135deg, var(--nclex-light) 0%, var(--nclex-blue) 100%);
-  color: white;
+/* Primary actions - Professional and clear */
+.btn-primary {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(109, 174, 219, 0.3);
+  box-shadow: 0 2px 8px hsl(var(--primary) / 0.25);
 }
 
-.btn-primary:hover, [class*="bg-gradient"]:hover {
-  background: linear-gradient(135deg, var(--nclex-blue) 0%, var(--nclex-dark) 100%);
-  box-shadow: 0 4px 16px rgba(109, 174, 219, 0.4);
+.btn-primary:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 16px hsl(var(--primary) / 0.3);
   transform: translateY(-2px);
 }
 
@@ -329,30 +362,30 @@ button.text-red-600:hover, .btn-destructive:hover {
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
 
-/* Info/Secondary actions - Light Blue (Information) */
+/* Info/Secondary actions */
 .btn-secondary {
-  background-color: rgba(109, 174, 219, 0.1);
-  border: 2px solid rgba(109, 174, 219, 0.3);
-  color: var(--nclex-dark);
+  background-color: hsl(var(--secondary));
+  border: 2px solid hsl(var(--border));
+  color: hsl(var(--secondary-foreground));
 }
 
 .btn-secondary:hover {
-  background-color: rgba(109, 174, 219, 0.2);
-  border-color: rgba(109, 174, 219, 0.5);
-  box-shadow: 0 4px 12px rgba(109, 174, 219, 0.2);
+  background-color: hsl(var(--secondary) / 0.8);
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.15);
 }
 
-/* Active/Selected state - Bright Blue (Engagement) */
-[class*="bg-blue-500"], .active, [aria-selected="true"] {
-  background-color: var(--nclex-blue) !important;
-  color: white !important;
-  box-shadow: 0 0 0 3px rgba(109, 174, 219, 0.3);
+/* Active/Selected state */
+.active, [aria-selected="true"] {
+  background-color: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.3);
 }
 
 /* Hover effect for badges and status indicators */
 .badge:hover, [class*="Badge"]:hover {
   transform: scale(1.05);
-  box-shadow: 0 2px 8px rgba(109, 174, 219, 0.3);
+  box-shadow: 0 2px 8px hsl(var(--primary) / 0.2);
 }
 
 /* Clickable icons */
@@ -363,8 +396,8 @@ svg:hover, .icon:hover {
 
 /* Progress bars - Visual feedback */
 [role="progressbar"], .progress-bar {
-  background: linear-gradient(90deg, var(--nclex-light), var(--nclex-blue));
-  box-shadow: 0 2px 4px rgba(109, 174, 219, 0.2);
+  background: hsl(var(--primary));
+  box-shadow: 0 2px 4px hsl(var(--primary) / 0.2);
   border-radius: 999px;
 }
 
@@ -388,10 +421,10 @@ svg:hover, .icon:hover {
 /* Pulse effect for important CTAs */
 @keyframes pulse-attention {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(109, 174, 219, 0.7);
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.7);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(109, 174, 219, 0);
+    box-shadow: 0 0 0 10px hsl(var(--primary) / 0);
   }
 }
 
@@ -425,7 +458,7 @@ select, label[for], .clickable {
 
 .lift-on-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(109, 174, 219, 0.25);
+  box-shadow: 0 6px 16px hsl(var(--primary) / 0.2);
 }
 
 /* Glow effect for important elements */
@@ -434,9 +467,9 @@ select, label[for], .clickable {
 }
 
 .glow-on-hover:hover {
-  box-shadow: 0 0 20px rgba(109, 174, 219, 0.5),
-              0 0 40px rgba(109, 174, 219, 0.3);
-  border-color: var(--nclex-blue);
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.4),
+              0 0 40px hsl(var(--primary) / 0.2);
+  border-color: hsl(var(--primary));
 }
 
 /* Scale up slightly on hover for cards */
@@ -467,7 +500,7 @@ a.animated-link::after {
   height: 2px;
   bottom: -2px;
   left: 0;
-  background-color: var(--nclex-blue);
+  background-color: hsl(var(--primary));
   transition: width 0.3s ease;
 }
 
