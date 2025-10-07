@@ -76,18 +76,22 @@ export default function HomePage() {
     <div className="min-h-screen flex flex-col overflow-hidden">
       <Header />
 
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-background">
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+        {/* Floating shapes */}
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" />
+        <div className="absolute top-40 -right-32 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style={{ animationDelay: "2s" }} />
+        <div className="absolute bottom-20 left-1/3 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style={{ animationDelay: "4s" }} />
 
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center space-y-8">
             <div className="space-y-4 animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border">
-                <Sparkles className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-foreground">Your Journey to Success Starts Here</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-purple-200 shadow-sm">
+                <Sparkles className="h-4 w-4 text-yellow-500" />
+                <span className="text-sm font-medium text-gray-900">Your Journey to Success Starts Here</span>
               </div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-balance text-foreground">
-                Your Path to NCLEX Success
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-balance">
+                Your Path to <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">NCLEX Success</span>
               </h1>
             </div>
 
@@ -100,7 +104,7 @@ export default function HomePage() {
               <Button
                 size="lg"
                 asChild
-                className="text-lg px-8 py-6"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
               >
                 <Link href="/programs">
                   <span className="flex items-center gap-2">
@@ -113,7 +117,7 @@ export default function HomePage() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="text-lg px-8 py-6"
+                className="border-2 border-gray-300 hover:border-purple-600 bg-white hover:bg-purple-50 text-gray-900 text-lg px-8 py-6 transition-all"
               >
                 <Link href="/about">
                   <span className="flex items-center gap-2">
@@ -127,19 +131,18 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-20">
             {[
-              { value: "95%", label: "Pass Rate", delay: "0.3s" },
-              { value: "5000+", label: "Students Trained", delay: "0.4s" },
-              { value: "100+", label: "Video Lectures", delay: "0.5s" },
+              { value: "95%", label: "Pass Rate", color: "from-blue-50 to-blue-100", textColor: "text-blue-600" },
+              { value: "5000+", label: "Students Trained", color: "from-purple-50 to-purple-100", textColor: "text-purple-600" },
+              { value: "100+", label: "Video Lectures", color: "from-pink-50 to-pink-100", textColor: "text-pink-600" },
             ].map((stat, index) => (
               <div
                 key={index}
-                className="rounded-2xl p-8 text-center bg-card border border-border hover:shadow-lg transition-all duration-300"
-                style={{ animationDelay: stat.delay }}
+                className={`rounded-2xl p-8 text-center bg-gradient-to-br ${stat.color} border border-white shadow-md hover:shadow-xl transition-all duration-300`}
               >
-                <div className="text-5xl font-bold text-primary mb-2">
+                <div className={`text-5xl font-bold ${stat.textColor} mb-2`}>
                   {stat.value}
                 </div>
-                <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
+                <div className="text-sm text-gray-700 font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
