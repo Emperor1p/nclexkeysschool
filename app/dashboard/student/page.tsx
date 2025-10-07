@@ -189,7 +189,7 @@ export default function StudentDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-r from-[#9faeed] to-[#6daedb] rounded-lg">
+              <div className="p-2 bg-primary rounded-lg">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -224,7 +224,7 @@ export default function StudentDashboard() {
                       {stat.change} from last week
                     </p>
                   </div>
-                  <div className="p-3 bg-gradient-to-r from-[#9faeed] to-[#6daedb] rounded-lg">
+                  <div className="p-3 bg-primary rounded-lg">
                     <stat.icon className="w-6 h-6 text-white" />
                   </div>
                 </div>
@@ -244,7 +244,7 @@ export default function StudentDashboard() {
           <TabsContent value="overview" className="space-y-6">
             {loading ? (
               <div className="text-center py-12">
-                <div className="w-8 h-8 border-4 border-[#9faeed] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
                 <p className="text-gray-600">Loading courses...</p>
               </div>
             ) : enrollments.length === 0 ? (
@@ -254,7 +254,7 @@ export default function StudentDashboard() {
                 <p className="text-gray-600 mb-4">Browse and enroll in courses to start your learning journey</p>
                 <Button 
                   onClick={() => setActiveTab('browse')}
-                  className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   Browse Available Courses
                 </Button>
@@ -301,7 +301,7 @@ export default function StudentDashboard() {
                         
                         <div className="flex gap-2">
                           <Button 
-                            className="flex-1 bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                            className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
                             onClick={() => {
                               setSelectedCourse(enrollment);
                               setActiveTab('materials');
@@ -398,7 +398,7 @@ export default function StudentDashboard() {
                               </Button>
                             ) : (
                               <Button 
-                                className="flex-1 bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                                className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
                                 onClick={() => handleEnrollInCourse(course.id)}
                                 disabled={isEnrolling}
                               >
@@ -523,7 +523,7 @@ export default function StudentDashboard() {
                 <p className="text-gray-600 mb-4">Select a course from "My Courses" to view materials</p>
                 <Button 
                   onClick={() => setActiveTab('overview')}
-                  className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   View My Courses
                 </Button>

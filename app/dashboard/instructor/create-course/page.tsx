@@ -166,7 +166,7 @@ export default function CreateCoursePage() {
               <Button 
                 onClick={handleSaveCourse}
                 disabled={uploading || !courseData.title || !courseData.description}
-                className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 {uploading ? (
                   <div className="flex items-center gap-2">

@@ -208,8 +208,8 @@ export default function InstructorDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-r from-[#9faeed] to-[#6daedb] rounded-lg">
-                <GraduationCap className="w-6 h-6 text-white" />
+              <div className="p-2 bg-primary rounded-lg">
+                <GraduationCap className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Instructor Dashboard</h1>
@@ -237,7 +237,7 @@ export default function InstructorDashboard() {
               )}
               <Button 
                 onClick={() => window.location.href = '/dashboard/instructor/create-course'}
-                className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Create Course
@@ -261,7 +261,7 @@ export default function InstructorDashboard() {
                       {stat.change} from last month
                     </p>
                   </div>
-                  <div className="p-3 bg-gradient-to-r from-[#9faeed] to-[#6daedb] rounded-lg">
+                  <div className="p-3 bg-primary rounded-lg">
                     <stat.icon className="w-6 h-6 text-white" />
                   </div>
                 </div>
@@ -303,7 +303,7 @@ export default function InstructorDashboard() {
 
           {loading ? (
             <div className="text-center py-12">
-              <div className="w-8 h-8 border-4 border-[#9faeed] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
               <p className="text-gray-600">Loading courses...</p>
             </div>
           ) : filteredCourses.length === 0 ? (
@@ -313,7 +313,7 @@ export default function InstructorDashboard() {
               <p className="text-gray-600 mb-4">Create your first course to get started</p>
               <Button 
                 onClick={() => window.location.href = '/dashboard/instructor/create-course'}
-                className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Create Course
@@ -448,7 +448,7 @@ export default function InstructorDashboard() {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                       <div 
-                        className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] h-2 rounded-full transition-all duration-300"
+                        className="bg-primary h-2 rounded-full transition-all duration-300"
                         style={{ width: `${student.progress}%` }}
                       ></div>
                     </div>
@@ -513,7 +513,7 @@ export default function InstructorDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-gradient-to-r from-[#9faeed] to-[#6daedb] rounded-lg text-white">
+                  <div className="text-center p-4 bg-primary rounded-lg text-white">
                     <div className="text-2xl font-bold">105</div>
                     <div className="text-sm opacity-90">Total Students</div>
                   </div>

@@ -43,37 +43,31 @@ export default function HomePage() {
       icon: BookOpen,
       title: "Comprehensive Content",
       description: "Access 100+ video lectures and 2000+ practice questions covering all NCLEX topics.",
-      gradient: "from-[#9faeed] to-[#6daedb]",
     },
     {
       icon: Users,
       title: "Expert Instructors",
       description: "Learn from experienced nursing educators with proven track records.",
-      gradient: "from-[#6daedb] to-[#2f4e7a]",
     },
     {
       icon: Award,
       title: "High Pass Rates",
       description: "Our students consistently achieve above-average NCLEX pass rates.",
-      gradient: "from-[#2f4e7a] to-[#143c78]",
     },
     {
       icon: TrendingUp,
       title: "Progress Tracking",
       description: "Monitor your learning journey with detailed analytics and insights.",
-      gradient: "from-[#143c78] to-[#0a0e1a]",
     },
     {
       icon: Clock,
       title: "Flexible Learning",
       description: "Study at your own pace with 24/7 access to all course materials.",
-      gradient: "from-[#9faeed] to-[#2f4e7a]",
     },
     {
       icon: CheckCircle,
       title: "Proven Methods",
       description: "Evidence-based teaching strategies designed for NCLEX success.",
-      gradient: "from-[#6daedb] to-[#143c78]",
     },
   ]
 
@@ -185,10 +179,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center space-y-4 mb-16 animate-fade-in-up">
             <h2 className="text-4xl sm:text-5xl font-bold">
-              Why Choose{" "}
-              <span className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] bg-clip-text text-transparent">
-                NCLEX Keys?
-              </span>
+              Why Choose NCLEX Keys?
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               We provide everything you need to succeed on your NCLEX exam.
@@ -199,22 +190,13 @@ export default function HomePage() {
             {features.map((feature, index) => (
               <Card
                 key={index}
-                className={`card-3d group border-soft hover:border-glow relative overflow-hidden animate-scale-in stagger-${index + 1} bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm`}
+                className="group hover:shadow-lg transition-all duration-300"
               >
-                {/* Gradient overlay on hover */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
-                />
-
-                <CardHeader className="relative">
-                  <div
-                    className={`flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ${feature.gradient} text-white mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg`}
-                  >
-                    <feature.icon className="h-7 w-7" />
+                <CardHeader>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4 group-hover:scale-110 transition-transform">
+                    <feature.icon className="h-6 w-6" />
                   </div>
-                  <CardTitle className="text-xl group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300">
-                    {feature.title}
-                  </CardTitle>
+                  <CardTitle className="text-xl">{feature.title}</CardTitle>
                   <CardDescription className="text-base">{feature.description}</CardDescription>
                 </CardHeader>
               </Card>
