@@ -76,46 +76,18 @@ export default function HomePage() {
     <div className="min-h-screen flex flex-col overflow-hidden">
       <Header />
 
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Animated background gradient */}
-        <div className="absolute inset-0 animated-bg opacity-10" />
-
-        {/* Floating shapes */}
-        <div className="floating-shape w-72 h-72 bg-blue-500 top-20 -left-20" style={{ animationDelay: "0s" }} />
-        <div className="floating-shape w-96 h-96 bg-purple-500 top-40 -right-32" style={{ animationDelay: "2s" }} />
-        <div className="floating-shape w-64 h-64 bg-pink-500 bottom-20 left-1/3" style={{ animationDelay: "4s" }} />
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-background">
 
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center space-y-8">
             <div className="space-y-4 animate-fade-in-up">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-strong border border-blue-500/20 animate-pulse-glow">
-                <Sparkles className="h-4 w-4 text-yellow-400" />
-                <span className="text-sm font-medium">Your Journey to Success Starts Here</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium text-foreground">Your Journey to Success Starts Here</span>
               </div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-balance">
-                Your Path to{" "}
-                <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient">
-                    NCLEX Success
-                  </span>
-                  <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 200 8" fill="none">
-                    <path
-                      d="M0 4C50 4 50 4 100 4C150 4 150 4 200 4"
-                      stroke="url(#gradient)"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      className="animate-pulse"
-                    />
-                    <defs>
-                      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#3b82f6" />
-                        <stop offset="50%" stopColor="#a855f7" />
-                        <stop offset="100%" stopColor="#ec4899" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </span>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-balance text-foreground">
+                Your Path to NCLEX Success
               </h1>
             </div>
 
@@ -128,21 +100,20 @@ export default function HomePage() {
               <Button
                 size="lg"
                 asChild
-                className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105 text-lg px-8 py-6"
+                className="text-lg px-8 py-6"
               >
                 <Link href="/programs">
-                  <span className="relative z-10 flex items-center gap-2">
+                  <span className="flex items-center gap-2">
                     Explore Programs
-                    <Zap className="h-5 w-5 group-hover:rotate-12 transition-transform" />
+                    <Zap className="h-5 w-5" />
                   </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Link>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 asChild
-                className="glass-strong border-soft hover:border-glow hover:scale-105 transition-all duration-300 text-lg px-8 py-6 bg-transparent"
+                className="text-lg px-8 py-6"
               >
                 <Link href="/about">
                   <span className="flex items-center gap-2">
@@ -162,10 +133,10 @@ export default function HomePage() {
             ].map((stat, index) => (
               <div
                 key={index}
-                className="glass-strong rounded-2xl p-8 text-center hover:scale-105 transition-all duration-300 animate-scale-in border border-white/10 hover:border-blue-500/30"
+                className="rounded-2xl p-8 text-center bg-card border border-border hover:shadow-lg transition-all duration-300"
                 style={{ animationDelay: stat.delay }}
               >
-                <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                <div className="text-5xl font-bold text-primary mb-2">
                   {stat.value}
                 </div>
                 <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
@@ -205,17 +176,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-transparent" />
-
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center space-y-4 mb-16 animate-fade-in-up">
-            <h2 className="text-4xl sm:text-5xl font-bold">
-              Student{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Success Stories
-              </span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-foreground">
+              Student Success Stories
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Hear from our students who have passed their NCLEX exams.
@@ -265,8 +230,8 @@ export default function HomePage() {
                   onClick={() => setCurrentTestimony(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentTestimony
-                      ? "bg-blue-600 scale-125"
-                      : "bg-white/30 hover:bg-white/50"
+                      ? "bg-primary scale-125"
+                      : "bg-muted hover:bg-muted-foreground"
                   }`}
                   aria-label={`Go to testimony ${index + 1}`}
                 />
@@ -283,19 +248,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 animated-bg opacity-20" />
-
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="relative mx-auto max-w-4xl text-center space-y-8 animate-fade-in-up">
-          <h2 className="text-4xl sm:text-5xl font-bold">
-            Ready to Start Your{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Journey?</span>
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground">
+            Ready to Start Your Journey?
           </h2>
           <p className="text-xl text-muted-foreground">Join our community of successful nursing professionals today.</p>
           <Button
             size="lg"
             asChild
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-110 transition-all duration-300 text-lg px-10 py-7 animate-pulse-glow"
+            className="text-lg px-10 py-7"
           >
             <Link href="/register">
               <span className="flex items-center gap-2">
