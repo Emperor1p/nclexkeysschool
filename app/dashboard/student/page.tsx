@@ -155,31 +155,72 @@ export default function StudentDashboard() {
   };
 
   const getMaterialAction = (material: CourseMaterial) => {
-    switch (material.type) {
-      case 'video':
-        return (
-          <Button size="sm" className="bg-red-500 hover:bg-red-600 text-white">
-            <Play className="w-4 h-4 mr-2" />
+    const handleView = () => {
+      if (material.file_url) {
+        window.open(material.file_url, '_blank');
+      } else {
+        alert('File URL not available');
+      }
+    };
+
+    const handleDownload = () => {
+      if (material.file_url) {
+        const link = document.createElement('a');
+        link.href = material.file_url;
+        link.download = material.file_name || material.title;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        alert('Download URL not available');
+      }
+    };
+
+    return (
+      <div className="flex gap-2">
+        {/* View/Watch Button */}
+        {material.type === 'video' ? (
+          <Button 
+            size="sm" 
+            className="bg-red-500 hover:bg-red-600 text-white"
+            onClick={handleView}
+          >
+            <Play className="w-4 h-4 mr-1" />
             Watch
           </Button>
-        );
-      case 'pdf':
-        return (
-          <Button size="sm" variant="outline" className="border-soft hover:border-glow">
-            <Download className="w-4 h-4 mr-2" />
-            Download
-          </Button>
-        );
-      case 'slides':
-        return (
-          <Button size="sm" variant="outline" className="border-soft hover:border-glow">
-            <Download className="w-4 h-4 mr-2" />
+        ) : material.type === 'pdf' ? (
+          <Button 
+            size="sm" 
+            className="bg-blue-500 hover:bg-blue-600 text-white"
+            onClick={handleView}
+          >
+            <FileText className="w-4 h-4 mr-1" />
             View
           </Button>
-        );
-      default:
-        return null;
-    }
+        ) : material.type === 'slides' ? (
+          <Button 
+            size="sm" 
+            className="bg-green-500 hover:bg-green-600 text-white"
+            onClick={handleView}
+          >
+            <Image className="w-4 h-4 mr-1" />
+            View
+          </Button>
+        ) : null}
+        
+        {/* Download Button */}
+        <Button 
+          size="sm" 
+          variant="outline"
+          onClick={handleDownload}
+          className="border-2 hover:bg-gray-50"
+          title="Download"
+        >
+          <Download className="w-4 h-4" />
+        </Button>
+      </div>
+    );
   };
 
   return (

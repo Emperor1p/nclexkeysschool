@@ -322,19 +322,19 @@ export default function InstructorDashboard() {
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredCourses.map((course) => (
-                <Card key={course.id} className="border-soft hover:border-glow transition-all duration-300">
+                <Card key={course.id} className="border-2 bg-white hover:shadow-lg transition-all duration-300">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
-                        <CardTitle className="text-lg">{course.title}</CardTitle>
-                        <CardDescription className="mt-1">
+                        <CardTitle className="text-lg text-gray-900 font-bold">{course.title}</CardTitle>
+                        <CardDescription className="mt-1 text-gray-700">
                           {course.course_enrollments?.[0]?.count || 0} students enrolled
                         </CardDescription>
-                        <p className="text-sm text-gray-600 mt-2">{course.description}</p>
+                        <p className="text-sm text-gray-700 mt-2">{course.description}</p>
                       </div>
                       <Badge 
                         variant={course.status === 'active' ? 'default' : 'secondary'}
-                        className={course.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}
+                        className={course.status === 'active' ? 'bg-green-100 text-green-800 font-semibold' : 'bg-gray-100 text-gray-800 font-semibold'}
                       >
                         {course.status}
                       </Badge>
@@ -343,21 +343,21 @@ export default function InstructorDashboard() {
                   <CardContent>
                     <div className="space-y-4">
                       <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div className="flex items-center text-gray-600">
-                          <Clock className="w-4 h-4 mr-2" />
+                        <div className="flex items-center text-gray-900 font-medium">
+                          <Clock className="w-4 h-4 mr-2 text-gray-700" />
                           {course.duration}
                         </div>
-                        <div className="flex items-center text-gray-600">
-                          <Award className="w-4 h-4 mr-2" />
+                        <div className="flex items-center text-gray-900 font-medium">
+                          <Award className="w-4 h-4 mr-2 text-gray-700" />
                           {course.price}
                         </div>
                       </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <BookOpen className="w-4 h-4 mr-2" />
+                      <div className="flex items-center text-sm text-gray-900 font-medium">
+                        <BookOpen className="w-4 h-4 mr-2 text-gray-700" />
                         {course.course_materials?.length || 0} materials
                       </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <Clock className="w-4 h-4 mr-2" />
+                      <div className="flex items-center text-sm text-gray-900 font-medium">
+                        <Clock className="w-4 h-4 mr-2 text-gray-700" />
                         Created {new Date(course.created_at).toLocaleDateString()}
                       </div>
                       
@@ -465,35 +465,35 @@ export default function InstructorDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Button 
               variant="outline" 
-              className="border-soft hover:border-glow h-20 flex-col"
+              className="border-2 h-20 flex-col bg-white hover:bg-gray-50 text-gray-900"
               onClick={() => setShowCreateCourse(true)}
             >
-              <BookOpen className="w-6 h-6 mb-2" />
-              <span>Add Course Material</span>
+              <BookOpen className="w-6 h-6 mb-2 text-gray-700" />
+              <span className="text-gray-900 font-medium">Add Course Material</span>
             </Button>
             <Button 
               variant="outline" 
-              className="border-soft hover:border-glow h-20 flex-col"
+              className="border-2 h-20 flex-col bg-white hover:bg-gray-50 text-gray-900"
               onClick={() => {/* Handle manage students */}}
             >
-              <Users className="w-6 h-6 mb-2" />
-              <span>Manage Students</span>
+              <Users className="w-6 h-6 mb-2 text-gray-700" />
+              <span className="text-gray-900 font-medium">Manage Students</span>
             </Button>
             <Button 
               variant="outline" 
-              className="border-soft hover:border-glow h-20 flex-col"
+              className="border-2 h-20 flex-col bg-white hover:bg-gray-50 text-gray-900"
               onClick={() => setShowAnalytics(!showAnalytics)}
             >
-              <BarChart3 className="w-6 h-6 mb-2" />
-              <span>View Analytics</span>
+              <BarChart3 className="w-6 h-6 mb-2 text-gray-700" />
+              <span className="text-gray-900 font-medium">View Analytics</span>
             </Button>
             <Button 
               variant="outline" 
-              className="border-soft hover:border-glow h-20 flex-col"
+              className="border-2 h-20 flex-col bg-white hover:bg-gray-50 text-gray-900"
               onClick={() => {/* Handle settings */}}
             >
-              <Settings className="w-6 h-6 mb-2" />
-              <span>Settings</span>
+              <Settings className="w-6 h-6 mb-2 text-gray-700" />
+              <span className="text-gray-900 font-medium">Settings</span>
             </Button>
           </div>
         </div>

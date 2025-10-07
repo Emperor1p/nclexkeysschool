@@ -70,7 +70,7 @@ export default function AboutPage() {
             <h1 className="text-5xl sm:text-7xl font-black animate-fade-in-up gradient-text text-shadow-strong">
               About NCLEX Keys International
             </h1>
-            <p className="text-2xl text-enhanced text-pretty animate-fade-in-up stagger-1 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-2xl text-gray-700 text-pretty animate-fade-in-up stagger-1 max-w-4xl mx-auto leading-relaxed">
               Empowering nursing students worldwide to achieve their professional goals through comprehensive NCLEX
               preparation.
             </p>
@@ -88,7 +88,7 @@ export default function AboutPage() {
               <h2 className="text-4xl sm:text-5xl font-black mb-8 gradient-text-secondary text-shadow">
                 Our Mission
               </h2>
-              <p className="text-xl text-enhanced leading-relaxed group-hover:text-foreground transition-all duration-500">
+              <p className="text-xl text-gray-700 leading-relaxed group-hover:text-gray-900 transition-all duration-500">
                 At NCLEX Keys International, our mission is to provide world-class NCLEX preparation that empowers
                 nursing students to pass their exams with confidence. We believe that every aspiring nurse deserves
                 access to high-quality education and support, regardless of their location or background.
