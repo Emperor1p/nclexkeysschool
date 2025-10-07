@@ -27,10 +27,10 @@ export default function ProgramsPage() {
 
   const handleMessageAdmin = () => {
     setIsModalOpen(false)
-    // TODO: Add admin WhatsApp link here
-    // For now, open the general WhatsApp group
+    // Open WhatsApp chat with admin
     const whatsappMessage = `Hi! I'm interested in the ${selectedProgram?.region} program (${selectedProgram?.price} ${selectedProgram?.period}). Can you help me with enrollment?`
-    const whatsappUrl = `https://chat.whatsapp.com/ElcEioKKFbcH0DLccfjyaH?mode=ems_copy_t`
+    const encodedMessage = encodeURIComponent(whatsappMessage)
+    const whatsappUrl = `https://wa.me/2347037367480?text=${encodedMessage}`
     window.open(whatsappUrl, '_blank')
   }
 
