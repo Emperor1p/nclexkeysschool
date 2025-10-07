@@ -30,7 +30,17 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protect dashboard routes
+  // Allow admin-secret page without authentication
+  if (request.nextUrl.pathname === "/admin-secret") {
+    return supabaseResponse
+  }
+
+  // Allow instructor dashboard without authentication (for admin-secret access)
+  if (request.nextUrl.pathname.startsWith("/dashboard/instructor")) {
+    return supabaseResponse
+  }
+
+  // Protect other dashboard routes (student dashboard)
   if (request.nextUrl.pathname.startsWith("/dashboard") && !user) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
