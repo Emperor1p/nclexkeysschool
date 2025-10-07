@@ -4,6 +4,7 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header"
 import { DashboardStats } from "@/components/dashboard/dashboard-stats"
 import { CourseList } from "@/components/dashboard/course-list"
 import { CourseMaterials } from "@/components/dashboard/course-materials"
+import { LiveClassLinks } from "@/components/dashboard/live-class-links"
 import { ExternalLinks } from "@/components/dashboard/external-links"
 import { ProgressOverview } from "@/components/dashboard/progress-overview"
 
@@ -45,6 +46,13 @@ export default async function DashboardPage() {
 
   // Combine both course types (instructor courses and program courses)
   const courses = [...(instructorCourses || []), ...(programCourses || [])]
+
+  // Get active live class links
+  const { data: liveClassLinks } = await supabase
+    .from("live_class_links")
+    .select("*")
+    .eq("is_active", true)
+    .order("scheduled_time", { ascending: true, nullsFirst: false })
 
   // Get user progress
   const { data: progress } = await supabase.from("user_progress").select("*").eq("user_id", user.id)
@@ -90,6 +98,9 @@ export default async function DashboardPage() {
 
         {/* Progress Overview */}
         <ProgressOverview progressPercentage={progressPercentage} />
+
+        {/* Live Class Links */}
+        <LiveClassLinks links={liveClassLinks || []} />
 
         {/* Course Materials */}
         <CourseMaterials courses={courses || []} userProgress={progress || []} />

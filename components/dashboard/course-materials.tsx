@@ -247,18 +247,30 @@ export function CourseMaterials({ courses, userProgress }: CourseMaterialsProps)
 
                       <div className="flex flex-wrap gap-2 mt-4">
                         {material.file_url && (
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            asChild
-                            className="hover:bg-primary/10 hover:border-glow transition-all duration-300"
-                          >
-                            <a href={material.file_url} target="_blank" rel="noopener noreferrer">
-                              <Download className="h-4 w-4 mr-2" />
-                              Download {material.type === 'pdf' ? 'PDF' : 'Slides'}
-                              <ExternalLink className="h-3 w-3 ml-2" />
-                            </a>
-                          </Button>
+                          <>
+                            <Button 
+                              size="sm" 
+                              variant="default" 
+                              asChild
+                              className="bg-gradient-to-r from-[#9faeed] to-[#6daedb] hover:from-[#6daedb] hover:to-[#2f4e7a] text-white"
+                            >
+                              <a href={material.file_url} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                View {material.type === 'pdf' ? 'PDF' : 'Slides'}
+                              </a>
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              asChild
+                              className="hover:bg-primary/10 hover:border-glow transition-all duration-300"
+                            >
+                              <a href={material.file_url} download target="_blank" rel="noopener noreferrer">
+                                <Download className="h-4 w-4 mr-2" />
+                                Download
+                              </a>
+                            </Button>
+                          </>
                         )}
                       </div>
                     </div>

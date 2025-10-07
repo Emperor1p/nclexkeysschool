@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { getInstructorCourses, updateCourseStatus, deleteCourse } from "@/lib/actions/courses";
+import { getInstructorLiveClassLinks } from "@/lib/actions/live-class-links";
+import { LiveClassManagement } from "@/components/dashboard/live-class-management";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -35,6 +37,7 @@ import {
 
 export default function InstructorDashboard() {
   const [courses, setCourses] = useState<any[]>([]);
+  const [liveClassLinks, setLiveClassLinks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [students, setStudents] = useState([
@@ -71,9 +74,10 @@ export default function InstructorDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
 
-  // Load courses on component mount
+  // Load courses and live class links on component mount
   useEffect(() => {
     loadCourses();
+    loadLiveClassLinks();
   }, []);
 
   const loadCourses = async () => {
@@ -99,6 +103,19 @@ export default function InstructorDashboard() {
       alert('Error loading courses. Please check your connection and try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadLiveClassLinks = async () => {
+    try {
+      const result = await getInstructorLiveClassLinks();
+      if (result.success) {
+        setLiveClassLinks(result.links || []);
+      } else {
+        console.error('Failed to load live class links:', result.error);
+      }
+    } catch (error) {
+      console.error('Error loading live class links:', error);
     }
   };
 
@@ -253,8 +270,13 @@ export default function InstructorDashboard() {
           ))}
         </div>
 
-        {/* Courses Section */}
+        {/* Live Class Links Section */}
         <div className="space-y-6">
+          <LiveClassManagement links={liveClassLinks} />
+        </div>
+
+        {/* Courses Section */}
+        <div className="space-y-6 mt-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <h2 className="text-2xl font-bold text-gray-900">Your Courses</h2>
             <div className="flex gap-2">
