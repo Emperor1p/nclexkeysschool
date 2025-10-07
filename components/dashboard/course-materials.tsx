@@ -52,10 +52,49 @@ export function CourseMaterials({ courses, userProgress }: CourseMaterialsProps)
     return "File"
   }
 
-  const videoCourses = courses.filter(course => course.video_url)
-  const materialCourses = courses.filter(course => course.materials_url)
+  // Extract all materials from courses
+  const allMaterials: any[] = []
+  courses.forEach(course => {
+    if (course.course_materials && course.course_materials.length > 0) {
+      course.course_materials.forEach((material: any) => {
+        allMaterials.push({
+          ...material,
+          courseTitle: course.title,
+          courseDescription: course.description
+        })
+      })
+    }
+    // Also handle old-style courses with video_url and materials_url
+    if (course.video_url) {
+      allMaterials.push({
+        id: `${course.id}-video`,
+        type: 'video',
+        title: course.title,
+        description: course.description,
+        file_url: course.video_url,
+        courseTitle: course.title,
+        courseDescription: course.description
+      })
+    }
+    if (course.materials_url) {
+      allMaterials.push({
+        id: `${course.id}-material`,
+        type: 'pdf',
+        title: course.title,
+        description: course.description,
+        file_url: course.materials_url,
+        courseTitle: course.title,
+        courseDescription: course.description
+      })
+    }
+  })
 
-  if (courses.length === 0) {
+  const videoMaterials = allMaterials.filter(m => m.type === 'video')
+  const pdfMaterials = allMaterials.filter(m => m.type === 'pdf')
+  const slidesMaterials = allMaterials.filter(m => m.type === 'slides')
+  const studyMaterials = [...pdfMaterials, ...slidesMaterials]
+
+  if (allMaterials.length === 0) {
     return (
       <Card className="border-soft animate-fade-in">
         <CardHeader>
@@ -63,7 +102,7 @@ export function CourseMaterials({ courses, userProgress }: CourseMaterialsProps)
             Course Materials
           </CardTitle>
           <CardDescription className="text-base">
-            No course materials available yet. Please complete your enrollment.
+            No course materials available yet. Check back soon!
           </CardDescription>
         </CardHeader>
       </Card>
@@ -85,71 +124,72 @@ export function CourseMaterials({ courses, userProgress }: CourseMaterialsProps)
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="videos" className="flex items-center gap-2">
               <Video className="h-4 w-4" />
-              Video Lectures ({videoCourses.length})
+              Video Lectures ({videoMaterials.length})
             </TabsTrigger>
             <TabsTrigger value="materials" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
-              Study Materials ({materialCourses.length})
+              Study Materials ({studyMaterials.length})
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="videos" className="space-y-4 mt-6">
-            {videoCourses.length === 0 ? (
+            {videoMaterials.length === 0 ? (
               <div className="text-center py-8">
                 <Video className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                 <p className="text-muted-foreground">No video lectures available yet.</p>
               </div>
             ) : (
-              videoCourses.map((course, index) => {
-                const completed = isCourseCompleted(course.id)
+              videoMaterials.map((material, index) => {
                 return (
                   <div
-                    key={course.id}
+                    key={material.id}
                     className="group flex items-start gap-4 p-5 rounded-xl border border-soft hover:border-glow hover:shadow-lg hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1 animate-fade-in-up"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div
-                      className={`flex h-14 w-14 items-center justify-center rounded-xl shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ${
-                        completed 
-                          ? "bg-gradient-to-br from-green-500/20 to-emerald-500/20 text-green-500" 
-                          : "bg-gradient-to-br from-primary/20 to-purple-500/20 text-primary"
-                      }`}
+                      className="flex h-14 w-14 items-center justify-center rounded-xl shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-gradient-to-br from-primary/20 to-purple-500/20 text-primary"
                     >
-                      {completed ? <CheckCircle className="h-7 w-7" /> : <PlayCircle className="h-7 w-7" />}
+                      <PlayCircle className="h-7 w-7" />
                     </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div>
                           <h3 className="font-bold text-lg group-hover:text-primary transition-colors duration-300">
-                            {course.title}
+                            {material.title}
                           </h3>
-                          {course.description && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Course: {material.courseTitle}
+                          </p>
+                          {material.description && (
                             <p className="text-sm text-enhanced mt-2 group-hover:text-foreground transition-colors duration-300">
-                              {course.description}
+                              {material.description}
                             </p>
                           )}
                         </div>
-                        {completed && (
-                          <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-soft">
-                            Completed
-                          </Badge>
-                        )}
                       </div>
 
                       <div className="flex flex-wrap gap-2 mt-4">
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
-                          asChild
-                          className="hover:bg-primary/10 hover:border-glow transition-all duration-300"
-                        >
-                          <a href={course.video_url} target="_blank" rel="noopener noreferrer">
-                            <PlayCircle className="h-4 w-4 mr-2" />
-                            Watch Video
-                            <ExternalLink className="h-3 w-3 ml-2" />
-                          </a>
-                        </Button>
+                        {material.file_url && (
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            asChild
+                            className="hover:bg-primary/10 hover:border-glow transition-all duration-300"
+                          >
+                            <a href={material.file_url} target="_blank" rel="noopener noreferrer">
+                              <PlayCircle className="h-4 w-4 mr-2" />
+                              Watch Video
+                              <ExternalLink className="h-3 w-3 ml-2" />
+                            </a>
+                          </Button>
+                        )}
+                        {material.duration && (
+                          <Badge variant="outline" className="text-xs">
+                            <Clock className="h-3 w-3 mr-1" />
+                            {material.duration}
+                          </Badge>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -159,67 +199,67 @@ export function CourseMaterials({ courses, userProgress }: CourseMaterialsProps)
           </TabsContent>
 
           <TabsContent value="materials" className="space-y-4 mt-6">
-            {materialCourses.length === 0 ? (
+            {studyMaterials.length === 0 ? (
               <div className="text-center py-8">
                 <FileText className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                 <p className="text-muted-foreground">No study materials available yet.</p>
               </div>
             ) : (
-              materialCourses.map((course, index) => {
-                const completed = isCourseCompleted(course.id)
+              studyMaterials.map((material, index) => {
                 return (
                   <div
-                    key={course.id}
+                    key={material.id}
                     className="group flex items-start gap-4 p-5 rounded-xl border border-soft hover:border-glow hover:shadow-lg hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-1 animate-fade-in-up"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div
-                      className={`flex h-14 w-14 items-center justify-center rounded-xl shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ${
-                        completed 
-                          ? "bg-gradient-to-br from-green-500/20 to-emerald-500/20 text-green-500" 
-                          : "bg-gradient-to-br from-primary/20 to-purple-500/20 text-primary"
-                      }`}
+                      className="flex h-14 w-14 items-center justify-center rounded-xl shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-gradient-to-br from-primary/20 to-purple-500/20 text-primary"
                     >
-                      {completed ? <CheckCircle className="h-7 w-7" /> : <FileText className="h-7 w-7" />}
+                      <FileText className="h-7 w-7" />
                     </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div>
                           <h3 className="font-bold text-lg group-hover:text-primary transition-colors duration-300">
-                            {course.title}
+                            {material.title}
                           </h3>
-                          {course.description && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Course: {material.courseTitle}
+                          </p>
+                          {material.description && (
                             <p className="text-sm text-enhanced mt-2 group-hover:text-foreground transition-colors duration-300">
-                              {course.description}
+                              {material.description}
                             </p>
                           )}
                         </div>
                         <div className="flex items-center gap-2">
                           <Badge variant="outline" className="text-xs">
-                            {getFileTypeLabel(course.materials_url)}
+                            {material.type === 'pdf' ? 'PDF' : 'Slides'}
                           </Badge>
-                          {completed && (
-                            <Badge variant="secondary" className="bg-green-500/10 text-green-600 border-soft">
-                              Completed
+                          {material.file_size && (
+                            <Badge variant="outline" className="text-xs">
+                              {(material.file_size / 1024 / 1024).toFixed(1)} MB
                             </Badge>
                           )}
                         </div>
                       </div>
 
                       <div className="flex flex-wrap gap-2 mt-4">
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
-                          asChild
-                          className="hover:bg-primary/10 hover:border-glow transition-all duration-300"
-                        >
-                          <a href={course.materials_url} target="_blank" rel="noopener noreferrer">
-                            {getFileTypeIcon(course.materials_url)}
-                            <span className="ml-2">Download Materials</span>
-                            <Download className="h-3 w-3 ml-2" />
-                          </a>
-                        </Button>
+                        {material.file_url && (
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            asChild
+                            className="hover:bg-primary/10 hover:border-glow transition-all duration-300"
+                          >
+                            <a href={material.file_url} target="_blank" rel="noopener noreferrer">
+                              <Download className="h-4 w-4 mr-2" />
+                              Download {material.type === 'pdf' ? 'PDF' : 'Slides'}
+                              <ExternalLink className="h-3 w-3 ml-2" />
+                            </a>
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </div>

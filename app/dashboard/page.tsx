@@ -28,13 +28,23 @@ export default async function DashboardPage() {
     .eq("user_id", user.id)
     .eq("status", "active")
 
-  // Get courses for enrolled programs
+  // Get ALL active courses from the courses table (instructor-created courses)
+  const { data: instructorCourses } = await supabase
+    .from("courses")
+    .select("*, course_materials(*)")
+    .eq("status", "active")
+    .order("created_at", { ascending: false })
+
+  // Get courses for enrolled programs (old system)
   const programIds = enrollments?.map((e) => e.program_id) || []
-  const { data: courses } = await supabase
+  const { data: programCourses } = await supabase
     .from("courses")
     .select("*")
     .in("program_id", programIds)
     .order("order_index", { ascending: true })
+
+  // Combine both course types (instructor courses and program courses)
+  const courses = [...(instructorCourses || []), ...(programCourses || [])]
 
   // Get user progress
   const { data: progress } = await supabase.from("user_progress").select("*").eq("user_id", user.id)
