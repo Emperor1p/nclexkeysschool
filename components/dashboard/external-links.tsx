@@ -5,7 +5,7 @@ import { MessageCircle, Send, ExternalLink, BookOpen, Users } from "lucide-react
 export function ExternalLinks() {
   const whatsappLink = "https://chat.whatsapp.com/ElcEioKKFbcH0DLccfjyaH?mode=ems_copy_t"
   const telegramLink = "https://t.me/+pfkI-HSjx0UzMGQ0"
-  const speedExamLink = "https://candidate.speedexam.net/openquiz.aspx?quiz=68A6BFA31A094327AA1ABD93DD8250DF"
+  const nclexKeysExamLink = "https://candidate.speedexam.net/openquiz.aspx?quiz=68A6BFA31A094327AA1ABD93DD8250DF"
 
   return (
     <Card className="border-soft hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 animate-fade-in">
@@ -51,15 +51,15 @@ export function ExternalLinks() {
             </a>
           </Button>
 
-          {/* SpeedExam Practice */}
+          {/* NCLEX Keys Exam Practice */}
           <Button variant="outline" className="h-auto py-4 justify-start bg-transparent hover:bg-purple-500/10 hover:border-purple-500/50 transition-all duration-300 group" asChild>
-            <a href={speedExamLink} target="_blank" rel="noopener noreferrer">
+            <a href={nclexKeysExamLink} target="_blank" rel="noopener noreferrer">
               <div className="flex items-center gap-3 w-full">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/10 text-purple-500 shrink-0 group-hover:scale-110 transition-transform duration-300">
                   <BookOpen className="h-5 w-5" />
                 </div>
                 <div className="text-left flex-1">
-                  <div className="font-semibold text-purple-600 group-hover:text-purple-700">SpeedExam Practice</div>
+                  <div className="font-semibold text-purple-600 group-hover:text-purple-700">NCLEX Keys Exam</div>
                   <div className="text-xs text-muted-foreground">Practice tests & assessments</div>
                 </div>
                 <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-purple-600" />
