@@ -167,41 +167,44 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-gradient-to-br from-background via-background to-primary/5 overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden">
+      {/* Floating shapes */}
+      <div className="absolute top-20 -right-20 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float" />
+      <div className="absolute bottom-20 -left-20 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float" style={{ animationDelay: "2s" }} />
       
-      <Card className="w-full max-w-md relative z-10 shadow-2xl border-soft">
+      <Card className="w-full max-w-md relative z-10 shadow-2xl border-2 border-purple-200 bg-white">
         <CardHeader className="space-y-6 pb-6">
           <div className="flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-primary text-primary-foreground shadow-lg">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 via-pink-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50">
               <GraduationCap className="h-9 w-9" />
             </div>
           </div>
           <div className="text-center space-y-2">
-            <CardTitle className="text-3xl bg-gradient-to-r from-purple-600 via-primary to-purple-600 bg-clip-text text-transparent">
+            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
               Create Your Account
             </CardTitle>
-            <CardDescription className="text-base">Join NCLEX Keys International and start your journey</CardDescription>
+            <CardDescription className="text-base text-gray-600">Join NCLEX Keys International and start your journey</CardDescription>
           </div>
         </CardHeader>
         <CardContent className="pb-8">
           <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
             {error && (
-              <Alert variant="destructive" className="border-red-500/50">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
+              <Alert variant="destructive" className="border-red-500/50 bg-red-50">
+                <AlertCircle className="h-4 w-4 text-red-600" />
+                <AlertDescription className="text-red-800">{error}</AlertDescription>
               </Alert>
             )}
 
             {success && (
-              <Alert className="border-green-500/50 bg-green-50 dark:bg-green-950/20">
+              <Alert className="border-green-500/50 bg-green-50">
                 <CheckCircle className="h-4 w-4 text-green-600" />
-                <AlertDescription className="text-green-800 dark:text-green-200">{success}</AlertDescription>
+                <AlertDescription className="text-green-800">{success}</AlertDescription>
               </Alert>
             )}
 
             <div className="space-y-2 group">
-              <Label htmlFor="fullName" className="text-sm font-semibold flex items-center gap-2">
-                <User className="h-4 w-4 text-primary" />
+              <Label htmlFor="fullName" className="text-sm font-semibold flex items-center gap-2 text-gray-700">
+                <User className="h-4 w-4 text-purple-600" />
                 Full Name
               </Label>
               <div className="relative">
@@ -211,18 +214,18 @@ export default function RegisterPage() {
                   placeholder="Enter your full name"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="h-11 pl-10 border-soft bg-background relative z-10"
+                  className="h-11 pl-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
                   required
                   autoComplete="name"
                   style={{ pointerEvents: 'auto' }}
                 />
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
               </div>
             </div>
 
             <div className="space-y-2 group">
-              <Label htmlFor="email" className="text-sm font-semibold flex items-center gap-2">
-                <Mail className="h-4 w-4 text-primary" />
+              <Label htmlFor="email" className="text-sm font-semibold flex items-center gap-2 text-gray-700">
+                <Mail className="h-4 w-4 text-purple-600" />
                 Email Address
               </Label>
               <div className="relative">
@@ -232,18 +235,18 @@ export default function RegisterPage() {
                   placeholder="Enter your email address"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="h-11 pl-10 border-soft bg-background relative z-10"
+                  className="h-11 pl-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
                   required
                   autoComplete="email"
                   style={{ pointerEvents: 'auto' }}
                 />
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
               </div>
             </div>
 
             <div className="space-y-2 group">
-              <Label htmlFor="phoneNumber" className="text-sm font-semibold flex items-center gap-2">
-                <Phone className="h-4 w-4 text-primary" />
+              <Label htmlFor="phoneNumber" className="text-sm font-semibold flex items-center gap-2 text-gray-700">
+                <Phone className="h-4 w-4 text-purple-600" />
                 Phone Number
               </Label>
               <div className="relative">
@@ -253,18 +256,18 @@ export default function RegisterPage() {
                   placeholder="Enter your phone number"
                   value={formData.phoneNumber}
                   onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-                  className="h-11 pl-10 border-soft bg-background relative z-10"
+                  className="h-11 pl-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
                   required
                   autoComplete="tel"
                   style={{ pointerEvents: 'auto' }}
                 />
-                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
               </div>
             </div>
 
             <div className="space-y-2 group">
-              <Label htmlFor="password" className="text-sm font-semibold flex items-center gap-2">
-                <Shield className="h-4 w-4 text-primary" />
+              <Label htmlFor="password" className="text-sm font-semibold flex items-center gap-2 text-gray-700">
+                <Shield className="h-4 w-4 text-purple-600" />
                 Password
               </Label>
               <div className="relative">
@@ -274,16 +277,16 @@ export default function RegisterPage() {
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="h-11 pl-10 pr-10 border-soft bg-background relative z-10"
+                  className="h-11 pl-10 pr-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
                   required
                   autoComplete="new-password"
                   style={{ pointerEvents: 'auto' }}
                 />
-                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors duration-200"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-200 z-20"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -291,8 +294,8 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2 group">
-              <Label htmlFor="confirmPassword" className="text-sm font-semibold flex items-center gap-2">
-                <Shield className="h-4 w-4 text-primary" />
+              <Label htmlFor="confirmPassword" className="text-sm font-semibold flex items-center gap-2 text-gray-700">
+                <Shield className="h-4 w-4 text-purple-600" />
                 Confirm Password
               </Label>
               <div className="relative">
@@ -302,16 +305,16 @@ export default function RegisterPage() {
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="h-11 pl-10 pr-10 border-soft bg-background relative z-10"
+                  className="h-11 pl-10 pr-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
                   required
                   autoComplete="new-password"
                   style={{ pointerEvents: 'auto' }}
                 />
-                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors duration-200"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-200 z-20"
                 >
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -319,8 +322,8 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-2 group">
-              <Label htmlFor="enrollmentToken" className="text-sm font-semibold flex items-center gap-2">
-                <Key className="h-4 w-4 text-primary" />
+              <Label htmlFor="enrollmentToken" className="text-sm font-semibold flex items-center gap-2 text-gray-700">
+                <Key className="h-4 w-4 text-purple-600" />
                 Enrollment Token
               </Label>
               <div className="relative">
@@ -330,14 +333,14 @@ export default function RegisterPage() {
                   placeholder="Enter your enrollment token"
                   value={formData.enrollmentToken}
                   onChange={(e) => setFormData({ ...formData, enrollmentToken: e.target.value })}
-                  className="h-11 pl-10 border-soft bg-background relative z-10"
+                  className="h-11 pl-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
                   required
                   autoComplete="off"
                   style={{ pointerEvents: 'auto' }}
                 />
-                <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
               </div>
-              <p className="text-xs text-muted-foreground flex items-center gap-1">
+              <p className="text-xs text-gray-600 flex items-center gap-1">
                 <Shield className="h-3 w-3" />
                 You'll receive this token after payment verification via WhatsApp
               </p>
@@ -345,7 +348,7 @@ export default function RegisterPage() {
 
             <Button 
               type="submit" 
-              className="w-full h-12 text-base bg-gradient-to-r from-purple-600 to-primary hover:from-purple-600/90 hover:to-primary/90 shadow-lg" 
+              className="w-full h-12 text-base bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 hover:from-purple-700 hover:via-pink-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-500/40 hover:shadow-xl hover:shadow-purple-500/50 transition-all" 
               disabled={loading}
             >
               {loading ? (
@@ -359,8 +362,8 @@ export default function RegisterPage() {
             </Button>
 
             <div className="text-center text-sm pt-2">
-              <span className="text-muted-foreground">Already have an account? </span>
-              <Link href="/login" className="text-primary hover:text-purple-600 font-semibold hover:underline">
+              <span className="text-gray-600">Already have an account? </span>
+              <Link href="/login" className="text-purple-600 hover:text-pink-600 font-semibold hover:underline">
                 Login
               </Link>
             </div>
