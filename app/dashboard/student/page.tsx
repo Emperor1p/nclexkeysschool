@@ -224,24 +224,24 @@ export default function StudentDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-white shadow-md border-b-2 border-purple-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary rounded-lg">
+              <div className="p-2 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-lg shadow-lg shadow-purple-500/50">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">My Courses</h1>
-                <p className="text-gray-600">Continue your learning journey</p>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">My Courses</h1>
+                <p className="text-gray-600 font-medium">Continue your learning journey</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <div className="text-sm text-gray-600">Overall Progress</div>
-                <div className="text-2xl font-bold text-gray-900">68%</div>
+                <div className="text-sm text-gray-600 font-medium">Overall Progress</div>
+                <div className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">68%</div>
               </div>
               <div className="w-16 h-16">
                 <Progress value={68} className="w-full h-full" />
@@ -255,17 +255,17 @@ export default function StudentDashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <Card key={index} className="border-soft hover:border-glow transition-all duration-300">
+            <Card key={index} className="border-2 border-purple-200 hover:border-purple-400 hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 bg-white">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">{stat.title}</p>
+                    <p className="text-sm font-semibold text-gray-600">{stat.title}</p>
                     <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                    <p className={`text-sm ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'}`}>
+                    <p className={`text-sm font-medium ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'}`}>
                       {stat.change} from last week
                     </p>
                   </div>
-                  <div className="p-3 bg-primary rounded-lg">
+                  <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg shadow-lg shadow-purple-500/40">
                     <stat.icon className="w-6 h-6 text-white" />
                   </div>
                 </div>
@@ -275,10 +275,10 @@ export default function StudentDashboard() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="overview">My Courses</TabsTrigger>
-            <TabsTrigger value="browse">Browse Courses</TabsTrigger>
-            <TabsTrigger value="materials">Course Materials</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 bg-white border-2 border-purple-200 p-1">
+            <TabsTrigger value="overview" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white text-gray-700 font-semibold">My Courses</TabsTrigger>
+            <TabsTrigger value="browse" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white text-gray-700 font-semibold">Browse Courses</TabsTrigger>
+            <TabsTrigger value="materials" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white text-gray-700 font-semibold">Course Materials</TabsTrigger>
           </TabsList>
 
           {/* My Courses Tab */}
