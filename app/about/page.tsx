@@ -29,6 +29,18 @@ export default function AboutPage() {
 
   const boardMembers = [
     {
+      name: "Bola Oyerinde",
+      title: "NRN, USRN | Founder & CEO (Boss B)",
+      image: "/board5.jpg",
+      bio: "Better known by her powerful moniker, 'Boss B,' is the dynamic founder and CEO of NCLEX KEYS—a premier coaching service dedicated to unlocking the nursing license for ambitious professionals worldwide. For over two decades, Boss B has been a cornerstone of local nursing, dedicating 25 years to extensive, hands-on clinical practice. This incredible depth of experience gives her an unparalleled perspective on the real-world demands of the profession and serves as the bedrock of her teaching philosophy. While her roots are deep in patient care, Boss B's true calling is mentorship. Recognizing the high stakes and stress of the NCLEX exam which she has done successfully for over 3 years. However, she launched NCLEX KEYS Academy just one year ago to transform the preparation process. Her approach isn't just about reviewing content; it's about strategic, intensive coaching that meticulously decodes the exam's logic. Through her signature methods, she has successfully guided over 100 aspiring nurses to navigate their rigorous NCLEX journey with newfound confidence and the greatest ease. Boss B operates on the belief that passion fuels practice, and her commitment ensures that every student she coaches doesn't just pass the exam—they emerge as competent, confident clinicians ready to make a significant impact on patient care and lead with excellence.",
+    },
+    {
+      name: "Prince Chibuike",
+      title: "Master's in International Relations | Director of Strategic Engagement",
+      image: "/board6.jpg",
+      bio: "Prince Chibuike brings an exceptional blend of diplomacy and strategic foresight to his role, holding a Master's degree in International Relations Studies from E.M.U. As the Director of Strategic Engagement, Mr. Prince is the crucial link connecting NCLEX KEYS with key stakeholders, partners, and communities worldwide. He expertly leads initiatives that go beyond simple outreach, focusing on driving high-impact strategic collaborations and ensuring seamless institutional protocol. His leadership is pivotal in positioning NCLEX KEYS as a trusted, forward-thinking educational brand whose every engagement powerfully reflects its core mission: to empower future nurses globally.",
+    },
+    {
       name: "Lawal Boluwatife Joseph",
       title: "Registered Nurse (NGN RN, U.S. RN) | Mentor & Career Coach",
       image: "/board 1.jpg",
@@ -89,25 +101,16 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="text-xl text-gray-700 leading-relaxed group-hover:text-gray-900 transition-all duration-500">
-                At NCLEX Keys International, our mission is to provide world-class NCLEX preparation that empowers
-                nursing students to pass their exams with confidence. We believe that every aspiring nurse deserves
-                access to high-quality education and support, regardless of their location or background.
+                NCLEX KEYS is dedicated to empowering future nurses by providing intensive, results-driven coaching and strategic mentorship. We decode the NCLEX exam through expert guidance, ensuring our students achieve licensure with confidence, efficiency, and the knowledge required for immediate professional success.
               </p>
             </div>
 
-            <div className="group interactive-card p-8 rounded-3xl glass-strong animate-fade-in-up stagger-1">
+            <div className="group interactive-card p-8 rounded-3xl glass-strong animate-fade-in-up stagger-2">
               <h2 className="text-4xl sm:text-5xl font-black mb-8 gradient-text-accent text-shadow">
-                Our Story
+                Our Vision
               </h2>
-              <p className="text-xl text-muted-foreground leading-relaxed mb-6 group-hover:text-foreground transition-all duration-500">
-                Founded by experienced nursing educators and healthcare professionals, NCLEX Keys International was born
-                from a simple observation: many talented nursing students struggle with NCLEX preparation due to lack of
-                comprehensive resources and personalized support.
-              </p>
-              <p className="text-xl text-muted-foreground leading-relaxed group-hover:text-foreground transition-all duration-500">
-                We set out to change that by creating a comprehensive learning platform that combines expert
-                instruction, extensive practice materials, and a supportive community. Today, we're proud to have helped
-                thousands of students achieve their dreams of becoming licensed nurses.
+              <p className="text-xl text-gray-700 leading-relaxed group-hover:text-gray-900 transition-all duration-500">
+                To be the globally recognized, premier standard for strategic NCLEX preparation, transforming aspiring nurses into confident, licensed clinicians ready to excel and lead in patient care.
               </p>
             </div>
           </div>
@@ -156,19 +159,47 @@ export default function AboutPage() {
           <div className="mx-auto max-w-7xl relative z-10">
             <div className="text-center space-y-6 mb-20">
               <h2 className="text-4xl sm:text-6xl font-black gradient-text text-shadow-strong animate-text-reveal">
-                Board of Directors
+                Leadership Team
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto animate-fade-in-up stagger-1">
-                Meet the experienced leaders guiding NCLEX Keys International to excellence in nursing education.
+                Meet the visionary leaders driving NCLEX KEYS to excellence in nursing education and strategic global engagement.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-              {boardMembers.map((member, index) => (
+            {/* CEO Featured Section */}
+            <div className="max-w-4xl mx-auto mb-16">
+              <Card className="group card-3d-strong overflow-hidden hover:shadow-2xl hover:shadow-primary/30 transition-all duration-700 border-2 border-primary/30 hover:border-primary/60 glass-ultra">
+                <div className="grid md:grid-cols-2 gap-0">
+                  <div className="relative aspect-square md:aspect-auto overflow-hidden bg-gradient-to-br from-primary/20 to-purple-500/20">
+                    <img
+                      src={boardMembers[0].image || "/placeholder.svg"}
+                      alt={boardMembers[0].name}
+                      className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  </div>
+                  <CardContent className="p-8 space-y-6 flex flex-col justify-center">
+                    <div className="space-y-4">
+                      <div className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 border border-primary/30">
+                        <span className="text-xs font-bold text-primary uppercase tracking-wider">Founder & CEO</span>
+                      </div>
+                      <h3 className="font-black text-3xl group-hover:text-primary transition-all duration-500 gradient-text-secondary">{boardMembers[0].name}</h3>
+                      <p className="text-sm text-primary font-bold">{boardMembers[0].title}</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground transition-all duration-500">{boardMembers[0].bio}</p>
+                  </CardContent>
+                </div>
+              </Card>
+            </div>
+
+            {/* Other Board Members */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {boardMembers.slice(1).map((member, index) => (
                 <Card
                   key={index}
                   className="group card-3d-strong overflow-hidden hover:shadow-2xl hover:shadow-primary/30 transition-all duration-700 hover:-translate-y-6 border-soft hover:border-glow animate-bounce-in glass-ultra"
-                  style={{ animationDelay: `${index * 0.2}s` }}
+                  style={{ animationDelay: `${index * 0.15}s` }}
                 >
                   <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-primary/20 to-purple-500/20">
                     <img

@@ -40,34 +40,34 @@ export default function HomePage() {
 
   const features = [
     {
-      icon: BookOpen,
-      title: "Comprehensive Content",
-      description: "Access 100+ video lectures and 2000+ practice questions covering all NCLEX topics.",
+      icon: Target,
+      title: "Strategic Coaching",
+      description: "Intensive, results-driven coaching that meticulously decodes NCLEX exam logic.",
     },
     {
       icon: Users,
-      title: "Expert Instructors",
-      description: "Learn from experienced nursing educators with proven track records.",
+      title: "Expert Mentorship",
+      description: "Learn from Boss B and experienced educators with 25+ years of clinical practice.",
     },
     {
       icon: Award,
-      title: "High Pass Rates",
-      description: "Our students consistently achieve above-average NCLEX pass rates.",
+      title: "Proven Success",
+      description: "Over 100 aspiring nurses successfully guided to NCLEX licensure with confidence.",
     },
     {
-      icon: TrendingUp,
-      title: "Progress Tracking",
-      description: "Monitor your learning journey with detailed analytics and insights.",
-    },
-    {
-      icon: Clock,
-      title: "Flexible Learning",
-      description: "Study at your own pace with 24/7 access to all course materials.",
+      icon: BookOpen,
+      title: "Comprehensive Content",
+      description: "High-quality learning materials designed for immediate professional success.",
     },
     {
       icon: CheckCircle,
-      title: "Proven Methods",
-      description: "Evidence-based teaching strategies designed for NCLEX success.",
+      title: "Confidence Building",
+      description: "Transform from anxious test-taker to confident, competent clinician.",
+    },
+    {
+      icon: Sparkles,
+      title: "Global Engagement",
+      description: "Strategic collaborations and support for nursing professionals worldwide.",
     },
   ]
 
@@ -76,35 +76,34 @@ export default function HomePage() {
     <div className="min-h-screen flex flex-col overflow-hidden">
       <Header />
 
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
         {/* Floating shapes */}
-        <div className="absolute top-20 -left-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" />
-        <div className="absolute top-40 -right-32 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style={{ animationDelay: "2s" }} />
-        <div className="absolute bottom-20 left-1/3 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style={{ animationDelay: "4s" }} />
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float" />
+        <div className="absolute top-40 -right-32 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float" style={{ animationDelay: "2s" }} />
+        <div className="absolute bottom-20 left-1/3 w-64 h-64 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float" style={{ animationDelay: "4s" }} />
 
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center space-y-8">
             <div className="space-y-4 animate-fade-in-up">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-purple-200 shadow-sm">
                 <Sparkles className="h-4 w-4 text-yellow-500" />
-                <span className="text-sm font-medium text-gray-900">Your Journey to Success Starts Here</span>
+                <span className="text-sm font-medium text-gray-900">Premier Strategic NCLEX Coaching</span>
               </div>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-balance">
-                Your Path to <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">NCLEX Success</span>
+                Your Path to <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">NCLEX Excellence</span>
               </h1>
             </div>
 
             <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto text-pretty animate-fade-in-up stagger-1">
-              Join thousands of nursing students who have achieved their dreams with our comprehensive NCLEX preparation
-              programs.
+              Join over 100 successful nursing professionals who have unlocked their NCLEX with intensive, results-driven coaching from Boss B and the NCLEX KEYS team.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 animate-fade-in-up stagger-2">
               <Button
                 size="lg"
                 asChild
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
+                className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white text-lg px-8 py-6 shadow-xl shadow-purple-500/40 hover:shadow-2xl hover:shadow-purple-500/50 transition-all hover:scale-105"
               >
                 <Link href="/programs">
                   <span className="flex items-center gap-2">
@@ -117,11 +116,11 @@ export default function HomePage() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="border-2 border-gray-300 hover:border-purple-600 bg-white hover:bg-purple-50 text-gray-900 text-lg px-8 py-6 transition-all"
+                className="border-2 border-purple-300 hover:border-purple-500 bg-white hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 text-gray-900 text-lg px-8 py-6 transition-all hover:scale-105 hover:shadow-lg"
               >
                 <Link href="/about">
                   <span className="flex items-center gap-2">
-                    Learn More
+                    Meet Our Team
                     <Target className="h-5 w-5" />
                   </span>
                 </Link>
@@ -131,13 +130,13 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-20">
             {[
-              { value: "95%", label: "Pass Rate", color: "from-blue-50 to-blue-100", textColor: "text-blue-600" },
-              { value: "5000+", label: "Students Trained", color: "from-purple-50 to-purple-100", textColor: "text-purple-600" },
-              { value: "100+", label: "Video Lectures", color: "from-pink-50 to-pink-100", textColor: "text-pink-600" },
+              { value: "100+", label: "Nurses Coached to Success", color: "from-indigo-100 to-indigo-200", textColor: "text-indigo-600", shadow: "hover:shadow-indigo-500/30" },
+              { value: "1 Year", label: "Academy Excellence", color: "from-purple-100 to-purple-200", textColor: "text-purple-600", shadow: "hover:shadow-purple-500/30" },
+              { value: "25 Years", label: "Clinical Experience", color: "from-pink-100 to-pink-200", textColor: "text-pink-600", shadow: "hover:shadow-pink-500/30" },
             ].map((stat, index) => (
               <div
                 key={index}
-                className={`rounded-2xl p-8 text-center bg-gradient-to-br ${stat.color} border border-white shadow-md hover:shadow-xl transition-all duration-300`}
+                className={`rounded-2xl p-8 text-center bg-gradient-to-br ${stat.color} border-2 border-white shadow-lg ${stat.shadow} hover:shadow-2xl transition-all duration-300 hover:-translate-y-2`}
               >
                 <div className={`text-5xl font-bold ${stat.textColor} mb-2`}>
                   {stat.value}
@@ -153,10 +152,10 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center space-y-4 mb-16 animate-fade-in-up">
             <h2 className="text-4xl sm:text-5xl font-bold">
-              Why Choose NCLEX Keys?
+              Why Choose NCLEX KEYS?
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              We provide everything you need to succeed on your NCLEX exam.
+              Strategic, intensive coaching that transforms NCLEX preparation into confident success.
             </p>
           </div>
 
@@ -164,17 +163,54 @@ export default function HomePage() {
             {features.map((feature, index) => (
               <Card
                 key={index}
-                className="group hover:shadow-lg transition-all duration-300"
+                className="group hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 hover:-translate-y-2 border-2 hover:border-purple-400 bg-white"
               >
                 <CardHeader>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4 group-hover:scale-110 transition-transform">
-                    <feature.icon className="h-6 w-6" />
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 text-purple-600 mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/50">
+                    <feature.icon className="h-7 w-7" />
                   </div>
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
-                  <CardDescription className="text-base">{feature.description}</CardDescription>
+                  <CardTitle className="text-xl group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:via-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text transition-colors">{feature.title}</CardTitle>
+                  <CardDescription className="text-base leading-relaxed">{feature.description}</CardDescription>
                 </CardHeader>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Vision Section */}
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-indigo-50/50 via-purple-50/50 to-pink-50/50">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center space-y-4 mb-16 animate-fade-in-up">
+            <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Our Mission & Vision
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="group hover:shadow-2xl hover:shadow-indigo-500/30 transition-all duration-300 border-2 hover:border-indigo-400 bg-white">
+              <CardHeader className="space-y-4">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-600 mb-2 group-hover:scale-110 transition-transform group-hover:shadow-lg group-hover:shadow-indigo-500/50">
+                  <Target className="h-7 w-7" />
+                </div>
+                <CardTitle className="text-2xl bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Mission</CardTitle>
+                <CardDescription className="text-base leading-relaxed text-foreground">
+                  NCLEX KEYS is dedicated to empowering future nurses by providing intensive, results-driven coaching and strategic mentorship. We decode the NCLEX exam through expert guidance, ensuring our students achieve licensure with confidence, efficiency, and the knowledge required for immediate professional success.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="group hover:shadow-2xl hover:shadow-pink-500/30 transition-all duration-300 border-2 hover:border-pink-400 bg-white">
+              <CardHeader className="space-y-4">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 text-pink-600 mb-2 group-hover:scale-110 transition-transform group-hover:shadow-lg group-hover:shadow-pink-500/50">
+                  <Sparkles className="h-7 w-7" />
+                </div>
+                <CardTitle className="text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Vision</CardTitle>
+                <CardDescription className="text-base leading-relaxed text-foreground">
+                  To be the globally recognized, premier standard for strategic NCLEX preparation, transforming aspiring nurses into confident, licensed clinicians ready to excel and lead in patient care.
+                </CardDescription>
+              </CardHeader>
+            </Card>
           </div>
         </div>
       </section>

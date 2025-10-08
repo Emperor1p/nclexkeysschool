@@ -3,11 +3,11 @@ import { GraduationCap, Mail, Phone, MapPin, Twitter, Linkedin, Facebook } from 
 
 export function Footer() {
   return (
-    <footer className="relative bg-gradient-to-br from-muted/80 via-muted/50 to-primary/5 border-t border-soft overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-indigo-50/50 via-purple-50/50 to-pink-50/50 border-t-2 border-purple-200 overflow-hidden">
       {/* Decorative background */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-10 right-20 w-64 h-64 bg-primary/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 left-20 w-64 h-64 bg-purple-500/30 rounded-full blur-3xl" />
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-10 right-20 w-64 h-64 bg-indigo-400/40 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-10 left-20 w-64 h-64 bg-pink-400/40 rounded-full blur-3xl animate-float" style={{ animationDelay: "2s" }} />
       </div>
       
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 relative z-10">
@@ -15,10 +15,10 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4 group">
             <div className="flex items-center gap-2">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-purple-600 text-primary-foreground shadow-lg group-hover:scale-110 transition-transform duration-500 group-hover:rotate-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/50 group-hover:scale-110 transition-transform duration-500 group-hover:rotate-6">
                 <GraduationCap className="h-7 w-7" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 NCLEX Keys
               </span>
             </div>
@@ -29,7 +29,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="group">
-            <h3 className="font-bold text-lg mb-5 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            <h3 className="font-bold text-lg mb-5 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Quick Links
             </h3>
             <ul className="space-y-3">
@@ -70,7 +70,7 @@ export function Footer() {
 
           {/* Programs */}
           <div className="group">
-            <h3 className="font-bold text-lg mb-5 bg-gradient-to-r from-purple-600 to-primary bg-clip-text text-transparent">
+            <h3 className="font-bold text-lg mb-5 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               Programs
             </h3>
             <ul className="space-y-3">
@@ -88,26 +88,26 @@ export function Footer() {
 
           {/* Contact */}
           <div className="group">
-            <h3 className="font-bold text-lg mb-5 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            <h3 className="font-bold text-lg mb-5 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Contact Us
             </h3>
             <ul className="space-y-4">
-              <li className="flex items-center gap-3 text-sm text-foreground hover:text-primary transition-all duration-300 hover:translate-x-1 cursor-pointer font-bold">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <li className="flex items-center gap-3 text-sm text-foreground hover:text-purple-600 transition-all duration-300 hover:translate-x-1 cursor-pointer font-bold">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-purple-600">
                   <Mail className="h-4 w-4" />
                 </div>
-                <a href="mailto:nclexkeysintl.academy@gmail.com" className="hover:text-primary transition-colors duration-300">
+                <a href="mailto:nclexkeysintl.academy@gmail.com" className="hover:text-purple-600 transition-colors duration-300">
                   nclexkeysintl.academy@gmail.com
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-sm text-foreground hover:text-primary transition-all duration-300 hover:translate-x-1 cursor-pointer font-bold">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <li className="flex items-center gap-3 text-sm text-foreground hover:text-purple-600 transition-all duration-300 hover:translate-x-1 cursor-pointer font-bold">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-purple-600">
                   <Phone className="h-4 w-4" />
                 </div>
                 <span>+1 (555) 123-4567</span>
               </li>
-              <li className="flex items-center gap-3 text-sm text-foreground hover:text-primary transition-all duration-300 hover:translate-x-1 cursor-pointer font-bold">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <li className="flex items-center gap-3 text-sm text-foreground hover:text-purple-600 transition-all duration-300 hover:translate-x-1 cursor-pointer font-bold">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-purple-600">
                   <MapPin className="h-4 w-4" />
                 </div>
                 <span>Ikorodu, Lagos, Nigeria</span>
@@ -116,7 +116,7 @@ export function Footer() {
             
             {/* Social Media Icons */}
             <div className="mt-6">
-            <h4 className="font-black text-base mb-4 bg-gradient-to-r from-purple-600 to-primary bg-clip-text text-transparent">
+            <h4 className="font-black text-base mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               Follow Us
             </h4>
               <div className="flex gap-3">
