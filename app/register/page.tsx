@@ -214,7 +214,7 @@ export default function RegisterPage() {
                   placeholder="Enter your full name"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="h-11 pl-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
+                  className="h-11 pl-10 border-2 border-gray-300 bg-white focus:border-purple-500 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 relative z-10"
                   required
                   autoComplete="name"
                   style={{ pointerEvents: 'auto' }}
@@ -235,7 +235,7 @@ export default function RegisterPage() {
                   placeholder="Enter your email address"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="h-11 pl-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
+                  className="h-11 pl-10 border-2 border-gray-300 bg-white focus:border-purple-500 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 relative z-10"
                   required
                   autoComplete="email"
                   style={{ pointerEvents: 'auto' }}
@@ -256,7 +256,7 @@ export default function RegisterPage() {
                   placeholder="Enter your phone number"
                   value={formData.phoneNumber}
                   onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-                  className="h-11 pl-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
+                  className="h-11 pl-10 border-2 border-gray-300 bg-white focus:border-purple-500 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 relative z-10"
                   required
                   autoComplete="tel"
                   style={{ pointerEvents: 'auto' }}
@@ -277,7 +277,7 @@ export default function RegisterPage() {
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="h-11 pl-10 pr-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
+                  className="h-11 pl-10 pr-10 border-2 border-gray-300 bg-white focus:border-purple-500 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 relative z-10"
                   required
                   autoComplete="new-password"
                   style={{ pointerEvents: 'auto' }}
@@ -286,7 +286,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-200 z-20"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition-colors duration-200 z-20"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -305,7 +305,7 @@ export default function RegisterPage() {
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="h-11 pl-10 pr-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
+                  className="h-11 pl-10 pr-10 border-2 border-gray-300 bg-white focus:border-purple-500 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 relative z-10"
                   required
                   autoComplete="new-password"
                   style={{ pointerEvents: 'auto' }}
@@ -314,7 +314,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-200 z-20"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition-colors duration-200 z-20"
                 >
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -333,14 +333,14 @@ export default function RegisterPage() {
                   placeholder="Enter your enrollment token"
                   value={formData.enrollmentToken}
                   onChange={(e) => setFormData({ ...formData, enrollmentToken: e.target.value })}
-                  className="h-11 pl-10 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900 relative z-10"
+                  className="h-11 pl-10 border-2 border-gray-300 bg-white focus:border-purple-500 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 relative z-10"
                   required
                   autoComplete="off"
                   style={{ pointerEvents: 'auto' }}
                 />
                 <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
               </div>
-              <p className="text-xs text-gray-600 flex items-center gap-1">
+              <p className="text-xs text-gray-600 flex items-center gap-1 font-medium">
                 <Shield className="h-3 w-3" />
                 You'll receive this token after payment verification via WhatsApp
               </p>

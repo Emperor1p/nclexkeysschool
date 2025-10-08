@@ -105,7 +105,7 @@ export default function LoginPage() {
                 placeholder="john@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="h-11 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900"
+                className="h-11 border-2 border-gray-300 bg-white focus:border-purple-500 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:text-gray-900"
                 required
               />
             </div>
@@ -118,7 +118,7 @@ export default function LoginPage() {
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="h-11 border-2 border-gray-200 bg-white focus:border-purple-500 text-gray-900"
+                className="h-11 border-2 border-gray-300 bg-white focus:border-purple-500 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:text-gray-900"
                 required
               />
             </div>
