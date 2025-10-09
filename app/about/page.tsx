@@ -64,6 +64,12 @@ export default function AboutPage() {
       image: "/board4.jpg",
       bio: "Meet Abigail Adamaka OSAYI, (USRN, BNSC, RN) a passionate and driven professional. My goal as a tutor is to help students achieve their academic goals and develop a love for learning that will last for a lifetime. Outside of teaching, I enjoy working out and cooking, and I'm always looking for new ways to learn and grow. I specialize in identifying students' learning needs and creating personalised lesson plans that are tailored to their student's needs to help them meet their learning goals. I'm excited to get to know all of you and work together to help you achieve academic success!",
     },
+    {
+      name: "Florence Bala Dawet",
+      title: "RN, RCCN, USRN, BNSc. | NCLEX/IELTS Tutor",
+      image: "/board7.jpg",
+      bio: "A dedicated and passionate nurse tutor with extensive experience in helping aspiring nurses achieve their goals. Proven track record of success, having guided over 100 nurses in passing the NCLEX exam. Committed to providing personalized guidance, support, and expert instruction to empower students in achieving academic and professional excellence. Nr Florence Bala also practices bedside nursing in Rasheed Shekoni Teaching Hospital Dutse, Jigawa State, as a critical care nurse.",
+    },
   ]
 
   return (
