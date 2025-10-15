@@ -303,46 +303,49 @@ export default function StudentDashboard() {
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {enrollments.map((enrollment) => (
-                  <Card key={enrollment.id} className="border-soft hover:border-glow transition-all duration-300">
-                    <CardHeader>
+                  <Card key={enrollment.id} className="border-2 border-teal-100 hover:border-teal-300 hover:shadow-2xl hover:shadow-teal-500/20 transition-all duration-300 bg-white group">
+                    <CardHeader className="bg-gradient-to-br from-teal-50 to-indigo-50 pb-4">
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
-                          <CardTitle className="text-lg">{enrollment.courses.title}</CardTitle>
-                          <CardDescription className="mt-1">
+                          <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-teal-700 transition-colors">{enrollment.courses.title}</CardTitle>
+                          <CardDescription className="mt-1 text-gray-600 font-medium">
                             by {enrollment.courses.users?.full_name || 'Instructor'}
                           </CardDescription>
-                          <p className="text-sm text-gray-600 mt-2">{enrollment.courses.description}</p>
+                          <p className="text-sm text-gray-700 mt-2 line-clamp-2">{enrollment.courses.description}</p>
                         </div>
                         <Badge 
                           variant={enrollment.status === 'active' ? 'default' : 'secondary'}
-                          className={enrollment.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}
+                          className={enrollment.status === 'active' ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white border-0' : 'bg-gray-200 text-gray-700'}
                         >
                           {enrollment.status}
                         </Badge>
                       </div>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="pt-4">
                       <div className="space-y-4">
-                        <div className="flex items-center justify-between text-sm text-gray-600">
-                          <span>Progress</span>
-                          <span>{enrollment.progress_percentage}%</span>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-gray-600 font-semibold">Progress</span>
+                          <span className="text-teal-600 font-bold text-lg">{enrollment.progress_percentage}%</span>
                         </div>
-                        <Progress value={enrollment.progress_percentage} className="w-full" />
+                        <div className="relative">
+                          <Progress value={enrollment.progress_percentage} className="w-full h-3 bg-gray-100" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-indigo-500 rounded-full" style={{width: `${enrollment.progress_percentage}%`}}></div>
+                        </div>
                         
                         <div className="grid grid-cols-2 gap-4 text-sm">
-                          <div className="flex items-center text-gray-600">
-                            <Clock className="w-4 h-4 mr-2" />
-                            {enrollment.courses.duration}
+                          <div className="flex items-center text-gray-700 bg-teal-50 px-3 py-2 rounded-lg">
+                            <Clock className="w-4 h-4 mr-2 text-teal-600" />
+                            <span className="font-medium">{enrollment.courses.duration}</span>
                           </div>
-                          <div className="flex items-center text-gray-600">
-                            <Calendar className="w-4 h-4 mr-2" />
-                            Enrolled: {new Date(enrollment.enrolled_at).toLocaleDateString()}
+                          <div className="flex items-center text-gray-700 bg-indigo-50 px-3 py-2 rounded-lg">
+                            <Calendar className="w-4 h-4 mr-2 text-indigo-600" />
+                            <span className="font-medium text-xs">{new Date(enrollment.enrolled_at).toLocaleDateString()}</span>
                           </div>
                         </div>
                         
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 pt-2">
                           <Button 
-                            className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+                            className="flex-1 bg-gradient-to-r from-teal-500 to-indigo-500 hover:from-teal-600 hover:to-indigo-600 text-white font-semibold shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 transition-all"
                             onClick={() => {
                               setSelectedCourse(enrollment);
                               setActiveTab('materials');
@@ -350,7 +353,7 @@ export default function StudentDashboard() {
                           >
                             Continue Learning
                           </Button>
-                          <Button variant="outline" className="border-soft hover:border-glow">
+                          <Button variant="outline" className="border-2 border-teal-200 hover:border-teal-400 hover:bg-teal-50 text-teal-600">
                             <Download className="w-4 h-4" />
                           </Button>
                         </div>

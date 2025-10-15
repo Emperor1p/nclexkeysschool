@@ -202,25 +202,25 @@ export default function InstructorDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-indigo-50 to-purple-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-white shadow-md border-b-2 border-teal-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary rounded-lg">
-                <GraduationCap className="w-6 h-6 text-primary-foreground" />
+              <div className="p-2 bg-gradient-to-br from-teal-500 to-indigo-500 rounded-lg shadow-lg shadow-teal-500/50">
+                <GraduationCap className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Instructor Dashboard</h1>
-                <p className="text-gray-600">Manage your courses and students</p>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-indigo-600 bg-clip-text text-transparent">Instructor Dashboard</h1>
+                <p className="text-gray-600 font-medium">Manage your courses and students</p>
               </div>
             </div>
             <div className="flex gap-3">
               <Button 
                 variant="outline" 
                 onClick={() => setShowAnalytics(!showAnalytics)}
-                className="border-soft hover:border-glow"
+                className="border-2 border-teal-200 hover:border-teal-400 hover:bg-teal-50 text-teal-700 font-semibold"
               >
                 <BarChart3 className="w-4 h-4 mr-2" />
                 Analytics
@@ -229,7 +229,7 @@ export default function InstructorDashboard() {
                 <Button 
                   variant="outline" 
                   onClick={handleActivateAllCourses}
-                  className="border-green-500 text-green-600 hover:bg-green-50"
+                  className="border-2 border-green-400 text-green-600 hover:bg-green-50 font-semibold"
                 >
                   <CheckCircle className="w-4 h-4 mr-2" />
                   Activate All Courses
@@ -237,7 +237,7 @@ export default function InstructorDashboard() {
               )}
               <Button 
                 onClick={() => window.location.href = '/dashboard/instructor/create-course'}
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                className="bg-gradient-to-r from-teal-500 to-indigo-500 hover:from-teal-600 hover:to-indigo-600 text-white font-semibold shadow-lg shadow-teal-500/40"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Create Course
@@ -251,17 +251,17 @@ export default function InstructorDashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <Card key={index} className="border-soft hover:border-glow transition-all duration-300">
+            <Card key={index} className="border-2 border-teal-100 hover:border-teal-300 hover:shadow-2xl hover:shadow-teal-500/20 transition-all duration-300 bg-white">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                    <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                    <p className={`text-sm ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'}`}>
+                    <p className="text-sm font-semibold text-gray-600">{stat.title}</p>
+                    <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
+                    <p className={`text-sm font-medium ${stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'}`}>
                       {stat.change} from last month
                     </p>
                   </div>
-                  <div className="p-3 bg-primary rounded-lg">
+                  <div className="p-3 bg-gradient-to-br from-teal-500 to-indigo-500 rounded-lg shadow-lg shadow-teal-500/40">
                     <stat.icon className="w-6 h-6 text-white" />
                   </div>
                 </div>
